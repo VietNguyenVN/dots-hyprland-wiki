@@ -1,63 +1,61 @@
 ---
 title: Instalar / Actualizar / Desinstalar
 layout: /src/layouts/autonum.astro
-lastUpdated: 2024-12-13
+lastUpdated: 2026-07-07
 ---
 
-# Instalando
+:::caution
+La versión AGS de illogical impulse ya no recibe soporte.
+
+Aunque aún podría funcionar, tendrás que solucionar los problemas por tu cuenta.
+
+Una nueva incidencia de la versión AGS probablemente se cierre por no estar previsto.
+:::
+
+# Instalación
 ## Antes de empezar
 
-- Esto solo provee **personalización a nivel de usuario**. Necesitas configurar la red de internet, bluetooth, GPU, etc. por tu propia cuenta.
-- EndeavourOS GNOME es recomendable para evitar problemas.
-  - Otras distribuciones basadas en Arch funcionarán muy bien.
-  - No estamos seguros en las no basadas en Arch.
+- Esto solo proporciona **personalización a nivel de usuario**. La instalación de GNOME probablemente te dará algunas funciones (básicas) del sistema, como red, Bluetooth, etc., pero se asume que ya las has configurado tú mismo.
+- EndeavourOS es recomendable para ahorrarte molestias.
+  - Otras distribuciones de Arch también funcionarán correctamente.
+  - ¿Usas una distribución no basada en Arch? Intenta encontrar la tuya en la página de [Discusiones](https://github.com/end-4/dots-hyprland/discussions).
   - ¡Nunca será necesario reinstalar tu sistema al usar Dotfiles!
-- Si solo tienes 8GiB de RAM, podrías querer [configurar zram](https://forum.endeavouros.com/t/enabling-zram-in-endeavouros/37746) (o swap), ya que compilar Hyprland consume bastantes recursos.
 
-## Instalación automática (para distribuciones basadas en Arch solamente)
-**El método recomendado**.
+## Instalación automática (solo para distribuciones Arch)
 
-Simplemente ejecuta este comando y sigue el procedimiento del script
-```bash
-bash <(curl -s "https://ii.clsty.link/setup.sh")
-```
-El comando anterior clona el repositorio en `~/.cache/dots-hyprland` por defecto. Puedes cambiar esta ruta especificándola como un argumento:
-```bash
-bash <(curl -s "https://ii.clsty.link/setup.sh") ~/Downloads/dots-hyprland
-```
-
-:::note[Método alternativo]
-O simplemente clona el repositorio y ejecuta el script de instalación:
+Clona el repositorio, cambia a la rama `ii-ags` y ejecuta el script de instalación:
 ```bash
 t=~/.cache/dots-hyprland   # No ensuciemos tu carpeta de inicio
 git clone https://github.com/end-4/dots-hyprland.git "$t" --filter=blob:none
+git -C "$t" checkout ii-ags
 "$t"/install.sh
 ```
-:::
 
-:::tip[Consejo]
+:::tip
 El script `install.sh` es idempotente e interactivo.
 Puedes ejecutarlo múltiples veces y elegir realizar solo ciertas acciones.
 :::
 
-## Para NixOS
+## Para NixOS (experimental)
 - Actualmente, estos dotfiles no se ofrecen (todavía) como un flake.
 - Aunque puedes revisar [el flake de NixOS de end_4](https://github.com/end-4/CirnOS)
   - Incluye configuración de home-manager. Querrás revisar la carpeta `homes`.
 
-## Para OpenSUSE
+- Ver también https://github.com/end-4/dots-hyprland/discussions/1093
+
+## Para OpenSUSE (experimental)
 - Ver https://github.com/end-4/dots-hyprland/discussions/485
 
-## Para Fedora
-- Ver https://github.com/EisregenHaha/fedora-hyprland
+## Para Fedora (experimental)
+- Ver [la rama F42-ags de EisregenHaha/fedora-hyprland](https://github.com/EisregenHaha/fedora-hyprland/tree/F42-ags)
 
-- ver también (discusión anterior): https://github.com/end-4/dots-hyprland/discussions/840
+- Ver también (discusión anterior): https://github.com/end-4/dots-hyprland/discussions/840
 
-## Instalación manual (básicamente cualquier distro)
-:::note[Nota para distribuciones no-Arch]
-Tendrás que averiguar los equivalentes de los paquetes del valor del array `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD` más tarde cuando instales las dependencias.
+## Instalación manual (básicamente cualquier distribución)
+:::note[Nota para distribuciones no basadas en Arch]
+Más adelante, cuando instales las dependencias, tendrás que averiguar los equivalentes de los paquetes del valor del arreglo `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD`.
 - Para obtener información de un paquete (por ejemplo, qué ejecutable(s) proporciona), búscalo en [Arch Linux Packages](https://archlinux.org/packages) o en el [AUR](https://aur.archlinux.org/packages).
-- Si has terminado con éxito la instalación en alguna distribución Linux no basada en Arch, eres muy bienvenido a compartir la lista de paquetes (también otros pasos si es necesario) en [Discussions](https://github.com/end-4/dots-hyprland/discussions), y podríamos automatizar la instalación para ella en el futuro. ¡Gracias!
+- Si has terminado con éxito la instalación en alguna distribución Linux no basada en Arch, eres muy bienvenido a compartir la lista de paquetes (también otros pasos si es necesario) en [Discusiones](https://github.com/end-4/dots-hyprland/discussions), y podríamos automatizar la instalación para ella en el futuro. ¡Gracias!
 :::
 
 - Clona y ve al directorio
@@ -66,7 +64,7 @@ Tendrás que averiguar los equivalentes de los paquetes del valor del array `dep
   git clone https://github.com/end-4/dots-hyprland.git "$t" --filter=blob:none
   cd "$t"
   ```
-- Obtener paquetes: Instala todos los paquetes listados como el valor del array `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD`. Para Arch Linux, solo usa un ayudante de AUR como `yay`.
+- Obtener paquetes: Instala todos los paquetes listados como el valor del arreglo `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD`. Para Arch Linux, solo usa un ayudante de AUR como `yay`.
 
 - Ejecuta `manual-install-helper.sh` para instalar el resto de las dependencias.
   - También puedes instalar alternativas adecuadas como hayas descubierto, pero asegúrate de `git checkout` al commit requerido al instalar AGS.
@@ -80,12 +78,21 @@ Tendrás que averiguar los equivalentes de los paquetes del valor del array `dep
   - `Ctrl`+`Super`+`T` para seleccionar un fondo de pantalla
   - `Super`+`/` para una lista de atajos de teclado. ¡Diviértete!
 
-# Post instalación
+# Después de la instalación
+## Cosas no tan opcionales
+### Temas de Qt
+- Selecciona KVantum en las ventanas emergentes al ejecutar:
+```sh
+kcmshell6 kcm_style
+kcmshell6 kcm_colors
+```
+### Evitar conflictos con daemons de notificación
+- Los daemons de notificación como `dunst` y `mako` pueden venir con las personalizaciones de tu distribución y pueden interferir con AGS si se inician primero. Se recomienda desinstalarlos si no los usas en otro lugar.
 ## Cosas opcionales
-### Configuraciones extra
+### Configuraciones adicionales
 Revisa si te interesa algo en la carpeta `Extras`.
 ### Integración de medios con el navegador
-Si quieres que la miniatura de medios de tu navegador se muestre, obtén la extensión "Integración de navegador de Plasma".
+Si quieres que la miniatura de medios de tu navegador se muestre, obtén la extensión "Plasma Integration".
 - Para [Chromium](https://chrome.google.com/webstore/detail/plasma-integration/cimiefiiaegbelhefglklhhakcgmhkai)
 - Para [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plasma-integration/)
 
@@ -95,13 +102,13 @@ Pon esta línea en tu `~/.zshrc` para soportar el esquema de colores para ZSH:
 source ~/.config/zshrc.d/dots-hyprland.zsh
 ```
 
-## Lanzando Hyprland
-Para lanzar Hyprland, puedes usar un DM (Display Manager) o simplemente `tty`.
+## Iniciando Hyprland
+- Para iniciar Hyprland, puedes usar un gestor de pantalla (DM) o simplemente `tty`.
+- La wiki de Hyprland recomienda iniciar Hyprland con la sesión gestionada por uswm, pero yo no lo recomiendo. Usar esta opción no daña los dotfiles, pero ten en cuenta que podrías recibir mensajes no deseados de otros entornos de escritorio (por ejemplo, diálogos de autenticación duplicados).
 
-Consulta [Hyprland wiki](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para más detalles.
+Ver [wiki de Hyprland](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para obtener más detalles. A continuación, encontrarás algunos consejos adicionales.
 
-Aquí hay algunos consejos adicionales.
-### ¿Cómo auto-lanzar Hyprland después de iniciar sesión en `tty1`?
+### ¿Cómo auto-iniciar Hyprland después de iniciar sesión en `tty1`?
 Para ZSH o BASH, agrega esta línea al **final** de tu `~/.zshrc` o `~/.bashrc`:
 ```bash
 source ~/.config/zshrc.d/auto-Hypr.sh
@@ -112,7 +119,7 @@ Para FISH, agrega esta línea al **final** de tu `~/.config/fish/config.fish`:
 source ~/.config/fish/auto-Hypr.fish
 ```
 
-P.D. Se recomienda deshabilitar el DM si deseas lanzar Hyprland a través de tty.
+P.D. Se recomienda deshabilitar el DM si deseas iniciar Hyprland a través de tty.
 
 ### Soy un novato. ¿Qué es un tty y DM?
 
@@ -121,8 +128,8 @@ Aquí hay una breve introducción para darte un acceso rápido, aunque no exacta
 Puedes ver `tty` como una especie de "base" de un sistema Linux.
 Normalmente hay 7 `tty`s: `tty1` a `tty7`. Puedes presionar `Ctrl+Alt+F<n>` para cambiar a `tty<n>`, y escribir tu nombre de usuario y contraseña para iniciar sesión.
 
-Después de iniciar sesión, puedes lanzar un entorno gráfico a través de un comando, por ejemplo, `Hyprland`.
-De hecho, la mayoría de las interfaces gráficas solo se pueden lanzar **después** de iniciar sesión.
+Después de iniciar sesión, puedes iniciar un entorno gráfico a través de un comando, por ejemplo, `Hyprland`.
+De hecho, la mayoría de las interfaces gráficas solo se pueden iniciar **después** de iniciar sesión.
 
 Pero, ¿qué pasa si queremos una interfaz gráfica para la propia interfaz de inicio de sesión?
 
@@ -130,7 +137,7 @@ Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, L
 - Algunos DM comúnmente usados:
   - `sddm`: A menudo usado con KDE Plasma.
   - `gdm`: A menudo usado con Gnome.
-- Está habilitado a nivel del sistema y se lanza automáticamente después de arrancar el sistema (aún no iniciar sesión).
+- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún no iniciar sesión).
   - En una distro basada en systemd, el DM generalmente está habilitado como un servicio systemd. Ejecuta lo siguiente para ver qué DM está habilitado.
    ```bash
    grep 'ExecStart=' /etc/systemd/system/display-manager.service
@@ -141,7 +148,7 @@ Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, L
    - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
    - Los archivos de escritorio bajo estos directorios contienen la información de los entornos gráficos.
 
-# Actualizando
+# Actualización
 ## Instalado automáticamente
 - `cd` al directorio del repositorio
 - Ejecuta `git pull` para obtener los últimos cambios.
@@ -156,7 +163,7 @@ Ejecuta `./install.sh -h` para ver más uso.
 - Toma los archivos que desees. Normalmente querrás tomar la carpeta `.config/ags`.
 - Ejecuta `manual-install-helper.sh` para actualizar algunas de las dependencias.
 
-# Desinstalando
+# Desinstalación
 - Se recomienda **fuertemente** la desinstalación manual
 - Actualmente, hay un script para desinstalación, pero está lejos de ser perfecto y no se mantiene activamente.
 - Aquí va una larga explicación si te importa:
@@ -172,3 +179,11 @@ Ejecuta `./install.sh -h` para ver más uso.
 > 
 > En conclusión, es casi imposible escribir un script de desinstalación adecuado.
 > Es mejor que hagas los cambios revertidos manualmente según lo necesites.
+
+:::note[Estado actual]
+Dado que ahora usamos PKGBUILD locales para distribuciones basadas en Arch,
+el script `uninstall.sh` puede desinstalar correctamente los paquetes de Arch/AUR,
+pero la eliminación de archivos de configuración aún no es perfecta.
+
+Ver también https://github.com/end-4/dots-hyprland/issues/838#issuecomment-2406220007
+:::
