@@ -99,7 +99,21 @@ export default defineConfig({
         {
           label: 'illogical-impulse',
           collapsed: false,
-          badge: { text: 'New', variant: 'success' },
+          badge: {
+            text: {
+              'en': 'New',
+              // 'vi': '',
+              // 'zh-CN': '',
+              'es': 'Nuevo',
+              // 'ru': '',
+              // 'fr': '',
+              // 'pt-BR': '',
+              // 'de-DE': '',
+              // 'tr': '',
+              // 'zh-TW': '',
+            },
+            variant: 'success'
+          },
           autogenerate: { directory: 'ii-qs' },
         },
         {
@@ -142,7 +156,21 @@ export default defineConfig({
         },
         {
           label: 'Translate this wiki',
-          badge: { text: 'Help wanted', variant: 'note' },
+          badge: {
+            text: {
+              'en': 'Help wanted',
+              // 'vi': '',
+              // 'zh-CN': '',
+              'es': 'Ayúdanos',
+              // 'ru': '',
+              // 'fr': '',
+              // 'pt-BR': '',
+              // 'de-DE': '',
+              // 'tr': '',
+              // 'zh-TW': '',
+            },
+            variant: 'note'
+          },
           translations: {
             'zh-CN': '翻译此文档',
             'es': 'Traducir esta wiki',

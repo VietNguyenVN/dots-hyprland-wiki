@@ -41,19 +41,19 @@ Puedes ejecutarlo múltiples veces y elegir realizar solo ciertas acciones.
 - Aunque puedes revisar [el flake de NixOS de end_4](https://github.com/end-4/CirnOS)
   - Incluye configuración de home-manager. Querrás revisar la carpeta `homes`.
 
-- Ver también https://github.com/end-4/dots-hyprland/discussions/1093
+- Consulta también https://github.com/end-4/dots-hyprland/discussions/1093
 
 ## Para OpenSUSE (experimental)
-- Ver https://github.com/end-4/dots-hyprland/discussions/485
+- Consulta https://github.com/end-4/dots-hyprland/discussions/485
 
 ## Para Fedora (experimental)
-- Ver [la rama F42-ags de EisregenHaha/fedora-hyprland](https://github.com/EisregenHaha/fedora-hyprland/tree/F42-ags)
+- Consulta [la rama F42-ags de EisregenHaha/fedora-hyprland](https://github.com/EisregenHaha/fedora-hyprland/tree/F42-ags)
 
-- Ver también (discusión anterior): https://github.com/end-4/dots-hyprland/discussions/840
+- Consulta también (discusión anterior): https://github.com/end-4/dots-hyprland/discussions/840
 
 ## Instalación manual (básicamente cualquier distribución)
 :::note[Nota para distribuciones no basadas en Arch]
-Más adelante, cuando instales las dependencias, tendrás que averiguar los equivalentes de los paquetes del valor del arreglo `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD`.
+Más adelante, cuando instales las dependencias, tendrás que averiguar los equivalentes de los paquetes del valor del arreglo `depends` dentro de `scriptdata/arch-packages/*/PKGBUILD`.
 - Para obtener información de un paquete (por ejemplo, qué ejecutable(s) proporciona), búscalo en [Arch Linux Packages](https://archlinux.org/packages) o en el [AUR](https://aur.archlinux.org/packages).
 - Si has terminado con éxito la instalación en alguna distribución Linux no basada en Arch, eres muy bienvenido a compartir la lista de paquetes (también otros pasos si es necesario) en [Discusiones](https://github.com/end-4/dots-hyprland/discussions), y podríamos automatizar la instalación para ella en el futuro. ¡Gracias!
 :::
@@ -64,7 +64,7 @@ Más adelante, cuando instales las dependencias, tendrás que averiguar los equi
   git clone https://github.com/end-4/dots-hyprland.git "$t" --filter=blob:none
   cd "$t"
   ```
-- Obtener paquetes: Instala todos los paquetes listados como el valor del arreglo `depends` dentro de esos `scriptdata/arch-packages/*/PKGBUILD`. Para Arch Linux, solo usa un ayudante de AUR como `yay`.
+- Obtener paquetes: Instala todos los paquetes listados como el valor del arreglo `depends` dentro de `scriptdata/arch-packages/*/PKGBUILD`. Para Arch Linux, solo usa un ayudante de AUR como `yay`.
 
 - Ejecuta `manual-install-helper.sh` para instalar el resto de las dependencias.
   - También puedes instalar alternativas adecuadas como hayas descubierto, pero asegúrate de `git checkout` al commit requerido al instalar AGS.
@@ -79,7 +79,7 @@ Más adelante, cuando instales las dependencias, tendrás que averiguar los equi
   - `Super`+`/` para una lista de atajos de teclado. ¡Diviértete!
 
 # Después de la instalación
-## Cosas no tan opcionales
+## Detalles no tan opcionales
 ### Temas de Qt
 - Selecciona KVantum en las ventanas emergentes al ejecutar:
 ```sh
@@ -88,7 +88,7 @@ kcmshell6 kcm_colors
 ```
 ### Evitar conflictos con daemons de notificación
 - Los daemons de notificación como `dunst` y `mako` pueden venir con las personalizaciones de tu distribución y pueden interferir con AGS si se inician primero. Se recomienda desinstalarlos si no los usas en otro lugar.
-## Cosas opcionales
+## Detalles opcionales
 ### Configuraciones adicionales
 Revisa si te interesa algo en la carpeta `Extras`.
 ### Integración de medios con el navegador
@@ -106,7 +106,7 @@ source ~/.config/zshrc.d/dots-hyprland.zsh
 - Para iniciar Hyprland, puedes usar un gestor de pantalla (DM) o simplemente `tty`.
 - La wiki de Hyprland recomienda iniciar Hyprland con la sesión gestionada por uswm, pero yo no lo recomiendo. Usar esta opción no daña los dotfiles, pero ten en cuenta que podrías recibir mensajes no deseados de otros entornos de escritorio (por ejemplo, diálogos de autenticación duplicados).
 
-Ver [wiki de Hyprland](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para obtener más detalles. A continuación, encontrarás algunos consejos adicionales.
+Consulta la [wiki de Hyprland](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para obtener más detalles. A continuación, encontrarás algunos consejos adicionales.
 
 ### ¿Cómo auto-iniciar Hyprland después de iniciar sesión en `tty1`?
 Para ZSH o BASH, agrega esta línea al **final** de tu `~/.zshrc` o `~/.bashrc`:
@@ -139,10 +139,10 @@ Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, L
   - `gdm`: A menudo usado con Gnome.
 - Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún no iniciar sesión).
   - En una distro basada en systemd, el DM generalmente está habilitado como un servicio systemd. Ejecuta lo siguiente para ver qué DM está habilitado.
-   ```bash
-   grep 'ExecStart=' /etc/systemd/system/display-manager.service
-   ```
-   Si devuelve "No such file or directory", entonces no hay DM habilitado, o esta no es una distro basada en systemd.
+    ```bash
+    grep 'ExecStart=' /etc/systemd/system/display-manager.service
+    ```
+    Si devuelve "No such file or directory", entonces no hay DM habilitado, o esta no es una distro basada en systemd.
 - Te proporciona una interfaz gráfica para iniciar sesión y elegir el entorno gráfico (por ejemplo, Hyprland).
   - ¿Cómo sabe el DM qué entornos gráficos están disponibles?
    - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
@@ -185,5 +185,5 @@ Dado que ahora usamos PKGBUILD locales para distribuciones basadas en Arch,
 el script `uninstall.sh` puede desinstalar correctamente los paquetes de Arch/AUR,
 pero la eliminación de archivos de configuración aún no es perfecta.
 
-Ver también https://github.com/end-4/dots-hyprland/issues/838#issuecomment-2406220007
+Consulta también https://github.com/end-4/dots-hyprland/issues/838#issuecomment-2406220007
 :::

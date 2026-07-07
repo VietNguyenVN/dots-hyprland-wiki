@@ -1,0 +1,287 @@
+---
+title: Instalar/ Actualizar / Desinstalar
+layout: /src/layouts/autonum.astro
+lastUpdated: 2026-07-07
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Instalación
+### Consejos
+- Solo se proporciona **la personalización a nivel de usuario**. Eres responsable del resto del software y la configuración necesaria para el funcionamiento básico de tu sistema.
+- **No es necesario reinstalar tu sistema.**
+
+
+### Métodos
+
+- [Automatizado](#automated-installation): con un script
+- [Manual](#manual-installation): clona y pega manualmente
+- [Forks de la comunidad](#forks): installación especializada para ciertas distribuciones
+- [Distribuciones de terceros](#3rd-party-distros): sistemas operativos que ofrecen illogical-impulse listo para usar
+
+:::tip[Migración de versión AGS]
+*Omite esto si no usas la versión antigua de AGS o averígüalo por tu cuenta si no usas Arch Linux*
+
+La versión Quickshell debería funcionar correctamente después de la instalación, pero puede desinstalar los paquetes antiguos antes de instalar los nuevos:
+
+```sh
+sudo pacman -Rs $(pacman -Q | grep "illogical-impulse-" | awk '{print $1}')
+```
+
+luego realiza la instalación.
+:::
+
+## Instalación automatizada
+
+:::caution[¿Hyprland 0.55?]
+Si tu distribución no incluye Hyprland 0.55 y/o no estás preparado para ello, deberías cambiar a la versión previa a la integración de Lua en Hyprland. Ejemplo de instalación:
+```
+git clone --recursive https://github.com/end-4/dots-hyprland && cd dots-hyprland && git checkout 2026.05.11 && ./setup install
+```
+:::
+
+### Compatibilidad en distribuciones
+El script detecta automáticamente la distribución antes de continuar.
+Este es un resumen del estado de soporte de las distribuciones:
+- **Mantenido por desarrolladores:**
+  - [Arch Linux](https://archlinux.org/) y [EndeavourOS](https://endeavouros.com/) están bien mantenidas
+  - [CachyOS](https://cachyos.org/) debería de funcionar bien, aunque en casos raros las diferencias en paquetes pueden causar problemas para usuarios inexpertos. Lo mismo aplica a otras distribuciones basadas en Arch.
+- **Mantenido por la comunidad:**
+  - [Gentoo](https://www.gentoo.org/) (consulta [sdata/dist-gentoo/README.md](https://github.com/end-4/dots-hyprland/blob/main/sdata/dist-gentoo/README.md) para más información).
+  - [Fedora](https://fedoraproject.org/) (consulta [sdata/dist-fedora/README.md](https://github.com/end-4/dots-hyprland/blob/main/sdata/dist-fedora/README.md) para más información).
+  - Otras distribuciones: ¡Agradecemos las contribuciones! Consulta [esta página](../../dev/inst-script/#help-wanted) si deseas colaborar.
+- **En desarrollo:**
+  - El proyecto `dist-nix`, aún en desarrollo, intenta ofrecer compatibilidad entre distribuciones. Para distribuciones que utilizan paquetes relativamente antiguos, como [Debian](https://www.debian.org/), esta es prácticamente la única forma de instalar illogical-impulse. Consulta [#2382](https://github.com/end-4/dots-hyprland/discussions/2382) para probarlo.
+
+
+Usa cualquiera de los métodos a continuación. El primero es una alternativa más práctica al segundo, aunque cuestionable para algunas personas.
+
+<Tabs>
+<TabItem label="Usar script en línea">
+
+Ejecuta el siguiente comando:
+```bash
+bash <(curl -s https://ii.clsty.link/get)
+```
+
+Esto clona el repositorio en `~/.cache/dots-hyprland` por defecto y ejecuta `./setup install` por ti.
+
+### Avanzado: Personalizar instalación
+Para clonar en otro lugar, solo añade la ruta, por ejemplo:
+```bash
+bash <(curl -s https://ii.clsty.link/get) ~/Downloads/dots-hyprland
+```
+Para usar una instalación más minimalista que incluya principalmente Hyprland y Quickshell,
+pasa `--core` al script de instalación local (`./setup install`) ejecutando:
+```bash
+bash <(curl -s https://ii.clsty.link/get) -- --core
+```
+Para combinar los dos comportamientos anteriores, ejecuta:
+```bash
+bash <(curl -s https://ii.clsty.link/get) ~/Downloads/dots-hyprland -- --core
+```
+
+
+</TabItem>
+<TabItem label="Clona, cambia directorio y ejecuta">
+
+Ejecuta los siguientes comandos:
+```bash
+cd ~/.cache                                      # Tu elección, no importa
+git clone https://github.com/end-4/dots-hyprland # Clona el repositorio
+cd dots-hyprland                                 # Navega al repositorio clonado
+./setup install                                  # Ejecuta el script de instalación
+```
+
+### Instalación más minimalista
+Si deseas una instalación más minimalista que incluya principalmente Hyprland y Quickshell,
+ejecuta en su lugar `./setup install --core`.
+
+</TabItem>
+</Tabs>
+
+:::tip[Uso del subcomando: install]
+El subcomando `install` de `./setup` es idempotente e interactivo.
+
+Siempre puedes volver a ejecutar `./setup install` y elegir realizar solo ciertas acciones.
+
+Es útil cuando quieres reanudar un intento fallido o una actualización.
+:::
+
+## Forks
+Los siguientes enlaces son forks de la comunidad para otras distribuciones. **Estas se crearon cuando la compatibilidad entre distribuciones era limitada. Algunas de ellas son para la versión antigua de los *dotfiles* en AGS.**
+
+- NixOS
+  - Consulta [discusión #1093](https://github.com/end-4/dots-hyprland/discussions/1093)
+- OpenSUSE
+  - Consulta [discusión #485](https://github.com/end-4/dots-hyprland/discussions/485)
+  
+## Installación manual
+
+Para básicamente cualquier distribución
+
+:::caution
+Esta sección solo existe por demostración.
+
+Su uso no es recomendable en absoluto, ya que puede hacerte perder mucho tiempo.
+:::
+
+### Clona y navega al directorio
+
+```bash
+t=~/.cache/dots-hyprland   # No ensuciemos tu carpeta de inicio
+git clone https://github.com/end-4/dots-hyprland.git "$t" --filter=blob:none --recurse-submodules
+cd "$t"
+```
+
+### Instala las dependencias
+Para distribuciones basadas en Arch:
+- Instala todos los paquetes listados como valor del arreglo `depends` dentro de `./sdata/dist-arch/*/PKGBUILD`. Simplemente usa un gestor de paquetes AUR como `yay`.
+  - También puedes instalar alternativas adecuadas, según lo hayas descubierto.
+
+Para distribuciones no basadas en Arch:
+- Averigua los equivalentes de los paquetes listados en [deps-info.md](https://github.com/end-4/dots-hyprland/blob/main/sdata/deps-info.md) e instálalos.
+- Si has completado la instalación correctamente en alguna distribución no basada en Arch, puedes enviar un *PR*. Para más detalles, consulta [esta página](../../dev/inst-script/#help-wanted).
+
+### Configuración de permisos/servicios, etc.
+Lee el contenido de `sdata/subcmd-install/2.setups.sh`.
+- Si crees que todo está correcto, ejecuta `./setup install-setups`, que ejecutará este script.
+  - No ejecutes `sdata/subcmd-install/2.setups.sh` directamente, ya que debe ejecutarse mediante `./setup`.
+- O bien, ejecuta manualmente las líneas de este script con tus modificaciones.
+
+### Copiar archivos de configuración
+- Copia `dots/*` a tu carpeta `$HOME/` (revisa antes de hacerlo, ya que podrías sobrescribir tus propios archivos de configuración).
+- O bien, lee `sdata/subcmd-install/3.files.sh`.
+  - Si crees que todo está correcto, ejecuta `./setup install-files`, que ejecutará este script.
+  - No ejecutes `sdata/subcmd-install/3.files.sh` directamente, ya que debe ejecutarse con `./setup`.
+
+### Finalizar
+- Una vez que hayas terminado, inicia sesión de nuevo en Hyprland.
+  - `Ctrl`+`Super`+`T` para seleccionar un fondo de pantalla.
+  - `Super`+`/` para ver la lista de atajos de teclado. ¡Diviértete!
+
+## 3rd-party distros
+
+**Incluimos estas distribuciones aquí para tu información. No las respaldamos directamente y recomendamos actuar bajo tu criterio al seleccionar tu sistema operativo.**
+
+- [illogical-impulse-iso de El3ssar](https://github.com/El3ssar/illogical-impulse-iso): ISO de Arch que incluye illogical-impulse tal cual, sin modificaciones.
+
+# Después de la instalación
+## Detalles no tan opcionales
+
+### Evitar conflictos con daemons de notificación
+- Los daemons de notificación como `dunst` y `mako` pueden venir con las personalizaciones de tu distribución y pueden interferir con AGS si se inician primero. Se recomienda desinstalarlos si no los usas en otro lugar.
+
+### Evitar conflictos con AUR (solo en distribuciones basadas en Arch)
+El problema: Consulta [este comentario](https://github.com/end-4/dots-hyprland/discussions/3165#discussion-9788226).
+
+La solución: Edita manualmente tu archivo `/etc/pacman.conf` (no lo editaremos automáticamente, ya que es arriesgado) y añade:
+```conf
+IgnoreGroup=illogical-impulse
+```
+Consulta también [Arch Wiki - Pacman](https://wiki.archlinux.org/title/Pacman#Skip_package_group_from_being_upgraded) sobre la configuración de Pacman.
+
+## Detalles opcionales
+
+### Configuraciones adicionales
+
+Revisa si te interesa algo en la carpeta `dots-extra/`.
+
+### Integración de medios con el navegador
+
+Si quieres que la miniatura de medios de tu navegador se muestre, obtén la extensión "Plasma Integration".
+- Para [Chromium](https://chrome.google.com/webstore/detail/plasma-integration/cimiefiiaegbelhefglklhhakcgmhkai)
+- Para [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plasma-integration/)
+
+### Esquema de colores para ZSH
+Pon esta línea en tu `~/.zshrc` para soportar el esquema de colores para ZSH:
+```bash
+source ~/.config/zshrc.d/dots-hyprland.zsh
+```
+
+## Iniciando Hyprland
+- Para iniciar Hyprland, puedes usar un gestor de pantalla (DM) o simplemente `tty`.
+- La wiki de Hyprland recomienda iniciar Hyprland con la sesión gestionada por uswm, pero yo no lo recomiendo. Usar esta opción no daña los *dotfiles*, pero ten en cuenta que podrías recibir mensajes no deseados de otros entornos de escritorio (por ejemplo, diálogos de autenticación duplicados).
+
+Consulta la [wiki de Hyprland](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para obtener más detalles. A continuación, encontrarás algunos consejos adicionales.
+
+### ¿Cómo auto-iniciar Hyprland después de iniciar sesión en `tty1`?
+Para ZSH o BASH, agrega esta línea al **final** de tu `~/.zshrc` o `~/.bashrc`:
+```bash
+source ~/.config/zshrc.d/auto-Hypr.sh
+```
+
+Para FISH, agrega esta línea al **final** de tu `~/.config/fish/config.fish`:
+```fish
+source ~/.config/fish/auto-Hypr.fish
+```
+
+P.D. Se recomienda deshabilitar el DM si deseas iniciar Hyprland a través de tty.
+
+### Soy un novato. ¿Qué es un tty y DM?
+
+Aquí hay una breve introducción para darte un acceso rápido, aunque no exactamente cierto.
+
+Puedes ver `tty` como una especie de "base" de un sistema Linux.
+Normalmente hay 7 `tty`s: `tty1` a `tty7`. Puedes presionar `Ctrl+Alt+F<n>` para cambiar a `tty<n>`, y escribir tu nombre de usuario y contraseña para iniciar sesión.
+
+Después de iniciar sesión, puedes iniciar un entorno gráfico a través de un comando, por ejemplo, `Hyprland`.
+De hecho, la mayoría de las interfaces gráficas solo se pueden iniciar **después** de iniciar sesión.
+
+Pero, ¿qué pasa si queremos una interfaz gráfica para la propia interfaz de inicio de sesión?
+
+Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, Login Manager).
+- Algunos DM comúnmente usados:
+  - `sddm`: A menudo usado con KDE Plasma.
+  - `gdm`: A menudo usado con Gnome.
+- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún no iniciar sesión).
+  - En una distro basada en systemd, el DM generalmente está habilitado como un servicio systemd. Ejecuta lo siguiente para ver qué DM está habilitado.
+    ```bash
+    grep 'ExecStart=' /etc/systemd/system/display-manager.service
+    ```
+    Si devuelve `No such file or directory`, entonces no hay DM habilitado, o esta no es una distro basada en systemd.
+- Te proporciona una interfaz gráfica para iniciar sesión y elegir el entorno gráfico (por ejemplo, Hyprland).
+  - ¿Cómo sabe el DM qué entornos gráficos están disponibles?
+   - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
+   - Los archivos de escritorio bajo estos directorios contienen la información de los entornos gráficos.
+
+# Actualización
+
+:::caution[Actualización a Hyprland 0.55]
+Hyprland 0.55 introduce la configuración en Lua en lugar de Hyprlang. Si bien aún se puede usar el formato anterior, ya existen algunos cambios incompatibles con versiones anteriores debido a la reubicación de algunas variables. Hyprland solo te da dos meses para migrar a Lua.
+
+- Si decides seguir usando la versión 0.54 por ahora, consulta la nota "¿Hyprland 0.55?" en la sección de Instalación automatizada.
+- Si estás listo para la versión 0.55, sigue este procedimiento:
+  - Mueve la carpeta `~/.config/hypr/custom` a otra ubicación y elimínala.
+  - Ejecuta `git pull` y `./setup install` como de costumbre.
+  - Usando los archivos antiguos y los nuevos archivos de configuración proporcionados por los *dotfiles* como referencia, sobrescribe tus archivos de configuración antiguos en los nuevos archivos .lua.
+:::
+
+:::note[Resumen]
+Si usaste el script de instalación en línea en distribuciones basadas en Arch durante la instalación, puedes ejecutar el siguiente comando para actualizar:
+```bash
+cd ~/.cache/dots-hyprland && git stash && git pull && ./setup install
+```
+:::
+
+Por el momento, no tenemos de un verificador de actualizaciones ni un sistema de actualización automatizado. Dado que el script de instalación está diseñado para ser idempotente, para actualizar los *dotfiles*, deberás ejecutar el script de instalación nuevamente cada vez que desees actualizar, después de descargar los últimos cambios del repositorio.
+1. Navega al directorio del repositorio con `cd`. Por defecto, debería estar en `~/.cache/dots-hyprland`, a menos que hayas clonado el repositorio en otra ubicación.
+2. Ejecuta `git stash` para guardar los cambios locales. Idealmente, la instalación no debería modificar los archivos locales gestionados por Git, pero esto podría ocurrir inesperadamente, por lo que deberás guardarlos antes de descargar los últimos cambios.
+3. Ejecuta `git pull` para obtener y descargar los últimos cambios del repositorio.
+4. Ejecuta `./setup install` nuevamente.
+    - Omite los pasos que no deseas que el script actualice (especialmente los que utilizan `rsync ...`, ya que **sobrescribirán los archivos en su ruta de destino**). Normalmente, es posible que desees que se ejecute el paso `rsync` que involucra `dots/.config/quickshell`.
+
+:::tip
+Ejecuta `./setup install -h` para ver más usos.
+:::
+
+:::caution[Si realizaste la instalación manualmente]
+Aunque no se recomienda en absoluto, si lo instalaste manualmente:
+- Navega al directorio del repositorio con `cd` y ejecuta `git pull && git submodule update --init --recursive` para obtener los últimos cambios.
+- Asegúrate de que todas las dependencias estén instaladas, ya que la actualización puede incluir dependencias necesarias.
+- Descarga los archivos que necesites. Normalmente, querrás descargar la carpeta `dots/.config/quickshell`.
+:::
+
+
+# Uninstalling
+
+Just run `./setup uninstall`, but note that it's not perfect and not actively maintained so you need to choose carefully when answering the prompts.
