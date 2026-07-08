@@ -17,7 +17,7 @@ Primero, para una lista de atajos de teclado, presiona `Super`+`/`.
 
 También incluye algunas Acciones para el lanzador.
 
-## Resumen/lanzador
+## Vista general/lanzador de aplicaciones
 Presiona `Super` o `Super`+`Tab` para abrir.
 
 - **Ventanas**
@@ -34,7 +34,7 @@ Presiona `Super` o `Super`+`Tab` para abrir.
   - <u>Acciones</u>: Cada acción comienza con un `>`. Consulta la **hoja de trucos de atajos de teclado** para una lista
   - <u>Aplicaciones</u> por defecto, ¡por supuesto!
 
-## Controles de la barra
+## Controles de la barra principal
 - Medios:
   - Esquina superior derecha
     - Clic medio: reproducir/pausar medios
@@ -117,13 +117,13 @@ La Agrupación de Espacios de Trabajo introduce un sistema flexible que permite 
 Si deseas modificar los atajos de teclado o incluir [más funciones](https://wiki.hyprland.org/Configuring/Dispatchers/) para la navegación de espacios de trabajo, usa el script `${HOME}/.config/ags/scripts/hyprland/workspace_action.sh`, en lugar de `hyprctl dispatch`. Esto determinará el grupo de espacios de trabajo actual usando el ID del espacio de trabajo activo y despachará al espacio de trabajo adecuado.
 :::
 
-## Consideraciones Multi-Monitor
+## Consideraciones para múltiples monitores
 
-Considera estas estrategias para una gestión efectiva de múltiples monitores:
-- Asigna el grupo 1 (espacios de trabajo 1-10) al monitor principal mientras que el grupo 2 (espacios de trabajo 11-20) al monitor secundario.
-  - Al iniciar, mueve manualmente el espacio de trabajo inicial en el monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, luego `Ctrl` + `Super` + `Derecha`.
-  - En efecto, esto también creará un widget de resumen separado por monitor.
-- Usa [vinculación de espacios de trabajo](https://wiki.hyprland.org/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén todos los nombres de tus monitores usando `hyprctl monitors | grep Monitor`.
+Considera estas estrategias para la gestión eficaz de múltiples monitores:
+- Asigna el grupo 1 (espacios de trabajo 1-10) al monitor principal y el grupo 2 (espacios de trabajo 11-20) al monitor secundario:
+  - Al iniciar el sistema, mueve manualmente el espacio de trabajo inicial del monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, y luego `Ctrl` + `Super` + `Derecha`.
+  - Esto también creará un widget de vista general independiente para cada monitor.
+- Usa la [vinculación de espacios de trabajo](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén los nombres de todos tus monitores usando `hyprctl monitors | grep Monitor`.
   ```ini title="~/.config/custom/general.conf"
   # Vincula espacios de trabajo 1-10 (grupo 1) al monitor principal
   workspace = 1, monitor:eDP-1, default:true

@@ -108,7 +108,7 @@ Es útil cuando quieres reanudar un intento fallido o una actualización.
 :::
 
 ## Forks
-Los siguientes enlaces son forks de la comunidad para otras distribuciones. **Estas se crearon cuando la compatibilidad entre distribuciones era limitada. Algunas de ellas son para la versión antigua de los *dotfiles* en AGS.**
+Los siguientes enlaces son forks de la comunidad para otras distribuciones. **Estas se crearon cuando la compatibilidad entre distribuciones era limitada. Algunas de ellas son para la versión antigua de los dotfiles en AGS.**
 
 - NixOS
   - Consulta [discusión #1093](https://github.com/end-4/dots-hyprland/discussions/1093)
@@ -200,7 +200,7 @@ source ~/.config/zshrc.d/dots-hyprland.zsh
 
 ## Iniciando Hyprland
 - Para iniciar Hyprland, puedes usar un gestor de pantalla (DM) o simplemente `tty`.
-- La wiki de Hyprland recomienda iniciar Hyprland con la sesión gestionada por uswm, pero yo no lo recomiendo. Usar esta opción no daña los *dotfiles*, pero ten en cuenta que podrías recibir mensajes no deseados de otros entornos de escritorio (por ejemplo, diálogos de autenticación duplicados).
+- La wiki de Hyprland recomienda iniciar Hyprland con la sesión gestionada por uswm, pero yo no lo recomiendo. Usar esta opción no daña los dotfiles, pero ten en cuenta que podrías recibir mensajes no deseados de otros entornos de escritorio (por ejemplo, diálogos de autenticación duplicados).
 
 Consulta la [wiki de Hyprland](https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#launching-hyprland) para obtener más detalles. A continuación, encontrarás algunos consejos adicionales.
 
@@ -253,7 +253,7 @@ Hyprland 0.55 introduce la configuración en Lua en lugar de Hyprlang. Si bien a
 - Si estás listo para la versión 0.55, sigue este procedimiento:
   - Mueve la carpeta `~/.config/hypr/custom` a otra ubicación y elimínala.
   - Ejecuta `git pull` y `./setup install` como de costumbre.
-  - Usando los archivos antiguos y los nuevos archivos de configuración proporcionados por los *dotfiles* como referencia, sobrescribe tus archivos de configuración antiguos en los nuevos archivos .lua.
+  - Usando los archivos antiguos y los nuevos archivos de configuración proporcionados por los dotfiles como referencia, sobrescribe tus archivos de configuración antiguos en los nuevos archivos .lua.
 :::
 
 :::note[Resumen]
@@ -263,7 +263,7 @@ cd ~/.cache/dots-hyprland && git stash && git pull && ./setup install
 ```
 :::
 
-Por el momento, no tenemos de un verificador de actualizaciones ni un sistema de actualización automatizado. Dado que el script de instalación está diseñado para ser idempotente, para actualizar los *dotfiles*, deberás ejecutar el script de instalación nuevamente cada vez que desees actualizar, después de descargar los últimos cambios del repositorio.
+Por el momento, no tenemos de un verificador de actualizaciones ni un sistema de actualización automatizado. Dado que el script de instalación está diseñado para ser idempotente, para actualizar los dotfiles, deberás ejecutar el script de instalación nuevamente cada vez que desees actualizar, después de descargar los últimos cambios del repositorio.
 1. Navega al directorio del repositorio con `cd`. Por defecto, debería estar en `~/.cache/dots-hyprland`, a menos que hayas clonado el repositorio en otra ubicación.
 2. Ejecuta `git stash` para guardar los cambios locales. Idealmente, la instalación no debería modificar los archivos locales gestionados por Git, pero esto podría ocurrir inesperadamente, por lo que deberás guardarlos antes de descargar los últimos cambios.
 3. Ejecuta `git pull` para obtener y descargar los últimos cambios del repositorio.

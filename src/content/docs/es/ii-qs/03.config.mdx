@@ -1,0 +1,182 @@
+---
+title: Configuración
+layout: /src/layouts/autonum.astro
+lastUpdated: 2026-07-07
+---
+
+# Configuración de Hyprland
+
+Hyprland es responsable de...
+- atajos de teclado
+- variables de entorno
+- pantallas/monitores/espacios de trabajo
+- animaciones de ventana
+- ...
+
+Consulta la [Wiki de Hyprland](https://wiki.hypr.land/) para obtener instrucciones generales de configuración. A continuación, solo se documentan los detalles específicos de los dotfiles.
+
+- `~/.config/hypr/` es la carpeta de configuración de Hyprland.
+- La subcarpeta `hyprland` contiene las configuraciones predeterminadas.
+- La subcarpeta `custom` es para tus configuraciones adicionales.
+
+Puedes realizar cambios en la subcarpeta anterior, pero se sobrescribirán si decides actualizar los dotfiles.
+
+:::note
+Para sobrescribir las configuraciones predeterminadas, es posible que necesites usar algunas técnicas, como `hl.unbind()` para los atajos de teclado.
+
+Si no puedes sobrescribir algo, puedes copiar el archivo de configuración predeterminado de `~/.config/hypr/hyprland/` a `~/.config/hypr/custom/` y editar `~/.config/hypr/hyprland.conf` para comentar la línea que carga el archivo de configuración predeterminado.
+
+Si encuentras algún problema con Hyprland después de actualizarlo con `./setup install`, debes revisar `~/.config/hypr/hyprland.lua` para ver si el archivo de configuración predeterminado comentado contiene los cambios necesarios.
+:::
+
+# Configuración de Quickshell
+
+Quickshell ie responsable de elementos shell como la barra principal y barra laterales.
+
+## Configuración simple
+
+### Gráfica
+
+Pulsa `Super`+`I` o el botón de engranaje en la barra lateral derecha para abrir la configuración. Ahí están las configuraciones más comunes. Si no encuentras lo que buscas, puedes probar lo siguiente.
+
+### Edición de archivo de configuración
+
+El archivo de configuración es `~/.config/illogical-impulse/config.json`
+
+Para entender las opciones y valores definidos, consulta `~/.config/quickshell/ii/modules/common/Config.qml`
+
+:::note
+Para configuraciones que no se limitan a Quickshell, consulta la sección "Varios".
+:::
+### Formato de fecha y hora
+
+Puedes cambiar el formato de hora entre 24 y 12 horas en Configuración > General > Hora.
+
+Alternativamente, edita `time.format` en el archivo de configuración. Consulta https://doc.qt.io/qt-6/qtime.html#toString para ver el formato.
+
+## Configuración avanzada
+
+- Edita los archivos en `~/.config/quickshell/ii`
+- Consulta la [documentación de Quickshell](https://quickshell.outfoxxed.me/docs/types/)
+  - Se recomienda revisar al menos las páginas de Introducción, Posicionamiento y Lenguaje QML.
+
+# Varios
+
+## Temas de color
+
+### Vscode
+
+- Instala la extensión [Material Code](https://marketplace.visualstudio.com/items?itemName=rakib13332.material-code) y luego selecciona un fondo de pantalla.
+- Ajustes opcionales
+  - Puedes cambiar la opción "material-code.syntaxTheme", que tiene una configuración muy rara.
+  - Ejecuta "Material Code: Aplicar estilos" para añadir esquinas redondeadas. Si VSCode indica que la instalación está dañada, puedes seleccionar "No volver a mostrar".
+
+Esto funciona con la versión propietaria de Microsoft. Si usas alguna versión esquiza, no garantizamos que funcione. Bueno, solo se trata de rutas de archivo diferentes, así que no dudes en crear un PR para el fork de VSCode que uses. El script que gestiona el color se encuentra en `dots/.config/quickshell/ii/scripts/colors/code/material-code-set-color.sh`.
+
+## Cambiar la escala de la interfaz (todo)
+
+Para cambiar la escala de todos los elementos de tu pantalla, modifica el archivo `~/.config/hypr/custom/general.lua` siguiendo las instrucciones de la [wiki de Hyprland](https://wiki.hypr.land/Configuring/Basics/Monitors/).
+
+Como alternativa, para una interfaz gráfica, puedes usar `nwg-look` (debe instalarse por separado). Debería funcionar sin problemas con estos dotfiles.
+
+## Cambiar la escala de la interfaz (shell)
+
+Esto funciona ajustando la variable de entorno `QT_SCALE_FACTOR`. Existen dos métodos: el pragma Quickshell y las variables de entorno Hyprland. El primero afecta solo al shell, pero no facilita las actualizaciones. El segundo afecta a todas las aplicaciones Qt, pero sí facilita las actualizaciones.
+
+### Pragma de Quickshell
+
+Abre `~/.config/quickshell/ii/shell.qml` y modifica esta línea. Reinicia Quickshell (Ctrl+Super+R) para aplicar
+```qml
+//@ pragma Env QT_SCALE_FACTOR=1
+```
+
+### Variables de entorno de Hyprland
+
+Edita `~/.config/hypr/custom/env.lua` para incluir la siguiente línea (recuerda ajustarla según tus necesidades). Deberás reiniciar Hyprland (cerrando e iniciando sesión).
+
+```ini
+hl.env("QT_SCALE_FACTOR", "1")
+```
+
+:::tip[Consejo: primero encuentra el valor deseado]
+Quizás quieras usar el método pragma de Quickshell para encontrar el punto óptimo antes de aplicar la variable de entorno, evitando así tener que volver a iniciar sesión varias veces.
+:::
+
+## Cambiar tamaño de fuente
+
+### Aplicaciones GTK
+
+- Usa `gnome-tweaks` si quieres una interfaz gráfica con selector de fuentes.
+- De lo contrario, puedes usar `gsettings`.
+```bash
+# Sintaxis
+gsettings set org.gnome.desktop.interface font-name 'FONT_NAME FONT_SIZE'
+# Valor predeterminado para estos dotfiles
+gsettings set org.gnome.desktop.interface font-name 'Rubik 11'
+```
+
+### Aplicaciones Qt
+Puedes usar la aplicación de Configuración del sistema KDE para personalizar las fuentes.
+
+## Bloqueo de pantalla/Tiempo de espera
+
+### Tiempo de espera
+
+Referencia: [Hyprland Wiki](https://wiki.hypr.land/Hypr-Ecosystem/hypridle/)
+
+Edita `~/.config/hypr/hypridle.conf` según tus necesidades.
+
+### Usar otro programa de bloqueo de pantalla
+Referencia: [Arch Wiki](https://wiki.archlinux.org/title/Session_lock)
+
+Tomemos como ejemplo `swaylock`.
+
+Edita `~/.config/hypr/hypridle.conf` y modifica el valor de `$lock_cmd` de la siguiente manera:
+```ini
+$lock_cmd = swaylock
+```
+
+Reinicia `hypridle` después de realizar tus cambios (`pkill hypridle; hypridle & disown`).
+
+Ahora `loginctl lock-session` llamará `swaylock` para bloquear la pantalla.
+
+:::note[Cómo funciona]
+El comando `loginctl lock-session` enviará una señal al proceso `hypridle` en ejecución, y luego `hypridle` activará el comando a partir del valor de `$lock_cmd`.
+:::
+
+## Cloudflare WARP
+- Esto podría ayudarte a evitar las restricciones de tu ISP y ofrecerte una conexión a Internet más rápida.
+- También puedes usar el botón de la barra lateral derecha para alternarlo.
+- Para instalar y configurar WARP:
+  1. Instala el paquete manualmente si aún no lo has hecho.  
+  Si usas una distribución basada en Arch, puedes instalarlo desde AUR con `yay`:
+        ```bash
+        yay -S cloudflare-warp-bin
+        ```
+  2. Habilita e inicia el servicio WARP:
+        ```bash
+        sudo systemctl enable warp-svc
+        sudo systemctl start warp-svc
+        ```
+  3. Registra tu dispositivo:
+        ```bash
+        warp-cli registration new
+        ```
+        Te pedirá aceptar los Términos de servicio, escribe `y` y presiona Enter.  
+  4. Prueba la conexión:
+        ```bash
+        warp-cli connect
+        warp-cli disconnect
+        ```
+        Deberías ver `Success` como salida de ambos comandos.  
+  5. Para comprobar que el botón de la barra lateral funciona, haz clic en él y verifica el estado:
+        ```bash
+        warp-cli status
+        ```
+        Debería de mostrar `Status update :` seguido `Connected` o `Disconnected` según el estado actual de conexión.  
+        También puedes revisar el estado de la conexión visitando la página [1.1.1.1 Connection Information](https://1.1.1.1/help).  
+  6. *(Opcional)* Si deseas configurar el modo de funcionamiento de WARP (por ejemplo, crear un túnel mediante WARP y usar DNS-over-TLS para las consultas DNS), ejecuta:
+        ```bash
+        warp-cli mode warp+dot
+        ```
+        Consulta `warp-cli mode --help` para más información.
