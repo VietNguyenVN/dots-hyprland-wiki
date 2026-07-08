@@ -1,7 +1,7 @@
 ---
 title: Solución de problemas
 layout: /src/layouts/autonum.astro
-lastUpdated: 2026-07-07
+lastUpdated: 2026-07-08
 ---
 
 :::caution
@@ -31,10 +31,10 @@ Puedes ejecutar `./diagnose` para verificar su valor.
 ### Ejemplo esperado
 ```
 [===diagnose===] declare -p ILLOGICAL_IMPULSE_VIRTUAL_ENV
-declare -x ILLOGICAL_IMPULSE_VIRTUAL_ENV="/home/<username>/.local/state/ags/.venv"
+declare -x ILLOGICAL_IMPULSE_VIRTUAL_ENV="/home/user/.local/state/ags/.venv"
 [---SUCCESS---]
 ```
-Donde `<username>` representa el nombre de usuario.
+Donde `user` es tu nombre de usuario.
 
 ### Ejemplo inesperado 1
 ```
@@ -56,9 +56,9 @@ En el caso anterior, `$XDG_STATE_HOME` no se expande, lo cual resulta muy extra�
 - Asegúrate de que al ejecutar `install.sh`, no hayas omitido y hayas ejecutado correctamente `install-python-packages()`, lo que debería generar un directorio `~/.local/state/ags/.venv` no vacío.
 - Puedes especificar su valor directamente en `~/.config/hypr/custom/env.conf` de la siguiente manera:
 ```ini
-env = ILLOGICAL_IMPULSE_VIRTUAL_ENV, /home/<username>/.local/state/ags/.venv
+env = ILLOGICAL_IMPULSE_VIRTUAL_ENV, /home/user/.local/state/ags/.venv
 ```
-Y recuerda reemplazar `<username>` por tu nombre de usuario.
+Y recuerda reemplazar `user` por tu nombre de usuario.
 
 ## Acciones que deberías probar al menos una vez
 - Reinicia Hyprland o tu sistema, lo cual es necesario para aplicar los cambios en las variables de entorno.
@@ -154,11 +154,11 @@ considera los siguientes pasos:
 > Referencia: [end-4/dots-hyprland#278](https://github.com/end-4/dots-hyprland/issues/278)
 
 Según [esta publicación en los foros de Arch Linux](https://bbs.archlinux.org/viewtopic.php?pid=1311990#p1311990):
-> Algo necesita escuchar las señales dbus de systemd-logind para que esto funcione.
+> Para que esto funcione, es necesario que algo escuche las señales dbus de systemd-logind.
 
-Hypridle es capaz de ser esta "cosa", lo que significa que debes asegurarte de que esté ejecutándose,
-y luego `loginctl lock-session` enviará una señal a hypridle,
-como resultado hypridle bloqueará la pantalla ejecutando el `$lock_cmd` definido en su configuración `~/.config/hypr/hypridle.conf`.
+Hypridle puede ser ese "algo", lo que significa que debes asegurarte de que esté en ejecución,
+y luego `loginctl lock-session` enviará una señal a hypridle.
+Como resultado, hypridle bloqueará la pantalla ejecutando `$lock_cmd` definido en su configuración `~/.config/hypr/hypridle.conf`.
 
 Consulta [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/#configuration) para más información.
 

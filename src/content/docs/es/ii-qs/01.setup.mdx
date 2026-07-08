@@ -1,7 +1,7 @@
 ---
-title: Instalar/ Actualizar / Desinstalar
+title: Instalar / Actualizar / Desinstalar
 layout: /src/layouts/autonum.astro
-lastUpdated: 2026-07-07
+lastUpdated: 2026-07-08
 ---
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
@@ -13,13 +13,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ### Métodos
 
-- [Automatizado](#automated-installation): con un script
-- [Manual](#manual-installation): clona y pega manualmente
-- [Forks de la comunidad](#forks): installación especializada para ciertas distribuciones
-- [Distribuciones de terceros](#3rd-party-distros): sistemas operativos que ofrecen illogical-impulse listo para usar
+- [Automatizado](#instalación-automatizada): con un script.
+- [Manual](#instalación-manual): clona y pega manualmente.
+- [Forks de la comunidad](#forks): installación especializada para ciertas distribuciones.
+- [Distribuciones de terceros](#distribuciones-de-terceros): sistemas operativos que ofrecen illogical-impulse listo para usar.
 
 :::tip[Migración de versión AGS]
-*Omite esto si no usas la versión antigua de AGS o averígüalo por tu cuenta si no usas Arch Linux*
+*Omite esto si no usas la versión antigua de AGS o averígüalo por tu cuenta si no usas Arch Linux.*
 
 La versión Quickshell debería funcionar correctamente después de la instalación, pero puede desinstalar los paquetes antiguos antes de instalar los nuevos:
 
@@ -43,7 +43,7 @@ git clone --recursive https://github.com/end-4/dots-hyprland && cd dots-hyprland
 El script detecta automáticamente la distribución antes de continuar.
 Este es un resumen del estado de soporte de las distribuciones:
 - **Mantenido por desarrolladores:**
-  - [Arch Linux](https://archlinux.org/) y [EndeavourOS](https://endeavouros.com/) están bien mantenidas
+  - [Arch Linux](https://archlinux.org/) y [EndeavourOS](https://endeavouros.com/) están bien mantenidos.
   - [CachyOS](https://cachyos.org/) debería de funcionar bien, aunque en casos raros las diferencias en paquetes pueden causar problemas para usuarios inexpertos. Lo mismo aplica a otras distribuciones basadas en Arch.
 - **Mantenido por la comunidad:**
   - [Gentoo](https://www.gentoo.org/) (consulta [sdata/dist-gentoo/README.md](https://github.com/end-4/dots-hyprland/blob/main/sdata/dist-gentoo/README.md) para más información).
@@ -115,9 +115,9 @@ Los siguientes enlaces son forks de la comunidad para otras distribuciones. **Es
 - OpenSUSE
   - Consulta [discusión #485](https://github.com/end-4/dots-hyprland/discussions/485)
   
-## Installación manual
+## Instalación manual
 
-Para básicamente cualquier distribución
+Para básicamente cualquier distribución.
 
 :::caution
 Esta sección solo existe por demostración.
@@ -159,7 +159,7 @@ Lee el contenido de `sdata/subcmd-install/2.setups.sh`.
   - `Ctrl`+`Super`+`T` para seleccionar un fondo de pantalla.
   - `Super`+`/` para ver la lista de atajos de teclado. ¡Diviértete!
 
-## 3rd-party distros
+## Distribuciones de terceros
 
 **Incluimos estas distribuciones aquí para tu información. No las respaldamos directamente y recomendamos actuar bajo tu criterio al seleccionar tu sistema operativo.**
 
@@ -219,7 +219,7 @@ P.D. Se recomienda deshabilitar el DM si deseas iniciar Hyprland a través de tt
 
 ### Soy un novato. ¿Qué es un tty y DM?
 
-Aquí hay una breve introducción para darte un acceso rápido, aunque no exactamente cierto.
+Aquí hay una breve introducción para darte un acceso rápido, aunque **no exactamente cierto**.
 
 Puedes ver `tty` como una especie de "base" de un sistema Linux.
 Normalmente hay 7 `tty`s: `tty1` a `tty7`. Puedes presionar `Ctrl+Alt+F<n>` para cambiar a `tty<n>`, y escribir tu nombre de usuario y contraseña para iniciar sesión.
@@ -233,16 +233,16 @@ Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, L
 - Algunos DM comúnmente usados:
   - `sddm`: A menudo usado con KDE Plasma.
   - `gdm`: A menudo usado con Gnome.
-- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún no iniciar sesión).
+- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún sin iniciar sesión).
   - En una distro basada en systemd, el DM generalmente está habilitado como un servicio systemd. Ejecuta lo siguiente para ver qué DM está habilitado.
     ```bash
     grep 'ExecStart=' /etc/systemd/system/display-manager.service
     ```
-    Si devuelve `No such file or directory`, entonces no hay DM habilitado, o esta no es una distro basada en systemd.
+    Si devuelve `No such file or directory`, entonces no hay DM habilitado, o esta no es una distribución basada en systemd.
 - Te proporciona una interfaz gráfica para iniciar sesión y elegir el entorno gráfico (por ejemplo, Hyprland).
   - ¿Cómo sabe el DM qué entornos gráficos están disponibles?
-   - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
-   - Los archivos de escritorio bajo estos directorios contienen la información de los entornos gráficos.
+    - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
+    - Los archivos de escritorio bajo estos directorios contienen la información de los entornos gráficos.
 
 # Actualización
 
@@ -282,6 +282,6 @@ Aunque no se recomienda en absoluto, si lo instalaste manualmente:
 :::
 
 
-# Uninstalling
+# Desinstalación
 
-Just run `./setup uninstall`, but note that it's not perfect and not actively maintained so you need to choose carefully when answering the prompts.
+Solo ejecuta `./setup uninstall`, pero ten en cuenta que no es perfecto ni recibe mantenimiento activo, por lo que debes elegir con cuidado al responder a las preguntas.

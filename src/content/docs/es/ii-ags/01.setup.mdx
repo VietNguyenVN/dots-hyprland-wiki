@@ -1,7 +1,7 @@
 ---
 title: Instalar / Actualizar / Desinstalar
 layout: /src/layouts/autonum.astro
-lastUpdated: 2026-07-07
+lastUpdated: 2026-07-08
 ---
 
 :::caution
@@ -137,12 +137,12 @@ Entonces, aquí viene el DM (Display Manager, también llamado "LM", es decir, L
 - Algunos DM comúnmente usados:
   - `sddm`: A menudo usado con KDE Plasma.
   - `gdm`: A menudo usado con Gnome.
-- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún no iniciar sesión).
+- Está habilitado a nivel del sistema y se inicia automáticamente después de arrancar el sistema (aún sin iniciar sesión).
   - En una distro basada en systemd, el DM generalmente está habilitado como un servicio systemd. Ejecuta lo siguiente para ver qué DM está habilitado.
     ```bash
     grep 'ExecStart=' /etc/systemd/system/display-manager.service
     ```
-    Si devuelve "No such file or directory", entonces no hay DM habilitado, o esta no es una distro basada en systemd.
+    Si devuelve "No such file or directory", entonces no hay DM habilitado, o esta no es una distribución basada en systemd.
 - Te proporciona una interfaz gráfica para iniciar sesión y elegir el entorno gráfico (por ejemplo, Hyprland).
   - ¿Cómo sabe el DM qué entornos gráficos están disponibles?
    - Normalmente, busca en la ruta `/usr/share/xsessions` para los de X11, y `/usr/share/wayland-sessions` para los de Wayland.
@@ -164,7 +164,7 @@ Ejecuta `./install.sh -h` para ver más uso.
 - Ejecuta `manual-install-helper.sh` para actualizar algunas de las dependencias.
 
 # Desinstalación
-- Se recomienda **fuertemente** la desinstalación manual
+- Se recomienda **fuertemente** la desinstalación manual.
 - Actualmente, hay un script para desinstalación, pero está lejos de ser perfecto y no se mantiene activamente.
 - Aquí va una larga explicación si te importa:
 

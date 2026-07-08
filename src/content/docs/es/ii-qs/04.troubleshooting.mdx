@@ -1,0 +1,228 @@
+---
+title: Solución de problemas/FAQ
+layout: /src/layouts/autonum.astro
+lastUpdated: 2026-07-08
+---
+
+:::tip
+En esta página, presiona `Ctrl`+`F` para buscar o ve la barra lateral derecha para encontrar tu problema.
+:::
+
+# Solución de problemas generales
+
+## Dependencias rotas después de actualizar los paquetes del sistema
+Tomemos como ejemplo Arch Linux: después de ejecutar `sudo pacman -Syu`, se actualizan los paquetes del sistema, sin actualizar los paquetes compilados localmente por illogical-impulse.
+
+Ejecuta lo siguiente para reinstalar las dependencias:
+```sh
+git stash && git pull  # Actualizar el repositorio git
+./setup install-deps
+```
+
+## Quickshell no se inicia (no hay barra de estado)
+
+Primero, ejecútalo en un terminal para obtener los registros.
+```bash
+pkill qs; qs -c ii
+```
+Léelo con atención. Normalmente, el mensaje de error relevante se encuentra cerca del final. Consulta uno de los siguientes casos.
+
+### Errores comunes
+
+#### El módulo "Quickshell.SOME_MODULE" no está instalado
+
+Ejemplo de salida:
+```sh
+  ERROR:   caused by @services/PolkitService.qml[6:1]: module "Quickshell.Services.Polkit" is not installed
+  WARN: QThreadStorage: entry 1 destroyed before end of thread 0x7f4e91a18830
+```
+**Solución**: Actualiza Quickshell ejecutando de nuevo el script de instalación, omitiendo todo excepto la instalación de Quickshell.
+
+#### El módulo "qs.modules.common.widgets.shapes" no está instalado
+
+Ejemplo de salida:
+```sh
+  ERROR:   caused by @modules/common/widgets/MaterialShape.qml[1:1]: module "qs.modules.common.widgets.shapes" is not installed
+```
+**Solución**: El repositorio no se clonó correctamente con submódulos. Puedes:
+- Instalaciones con script: No omitas el paso en el que se solicita actualizar los submódulos de git.
+- Instalaciones manuales: 
+  - Debes clonar el repositorio con la opción `--recurse-submodules`. Simplemente usando el botón de descarga *no* funciona.
+  - Como alternativa, desde un repositorio clonado, ejecuta `git submodule update --init --recursive`.
+
+## Entorno virtual de Python
+
+La variable de entorno `$ILLOGICAL_IMPULSE_VIRTUAL_ENV` debe estar configurada correctamente, o algunas características de la configuración de Quickshell no funcionarán. La configuración predeterminada, `~/.config/hypr/hyprland/env.lua`, cargada por `~/.config/hypr/hyprland.lua`, ya tiene esta variable.
+
+Si por alguna razón no está ahí, agrega lo siguiente a tu configuración de Hyprland y reinícialo:
+```ini
+hl.env("ILLOGICAL_IMPULSE_VIRTUAL_ENV", home_dir .. "/.local/state/quickshell/.venv")
+```
+
+Puedes ejecutar `./diagnose` para verificar el valor.
+
+Ejemplo esperado:
+```
+[===diagnose===] declare -p ILLOGICAL_IMPULSE_VIRTUAL_ENV
+declare -x ILLOGICAL_IMPULSE_VIRTUAL_ENV="/home/user/.local/state/quickshell/.venv"
+[---SUCCESS---]
+```
+Donde `user` es tu nombre de usuario.
+
+## Cosas que puedes probar al menos una vez
+- Reinicia Hyprland o tu sistema, lo cual es necesario para aplicar los cambios en las variables de entorno.
+- Ejecuta `git pull` y luego `./setup install` nuevamente para asegurarte de que todo se haya instalado correctamente. Como el script es idempotente, puedes ejecutarlo tantas veces como quieras para verificar cosas o actualizar los dotfiles.
+
+## Ayuda
+
+1. Busca en esta página, luego en [incidencias](https://github.com/end-4/dots-hyprland/issues) y [discusiones](https://github.com/end-4/dots-hyprland/discussions).
+2. Si no encuentras nada, abre una nueva discusión.
+
+Aunque [@end-4](https://github.com/end-4) es más activo en Discord (@end_4), se prefiere GitHub ya que [@clsty](https://github.com/clsty) tiene un mejor conocimiento de los scripts de instalación y los problemas relacionados con Arch Linux.
+
+# Problemas varios comunes
+## Los temas no se ven bien
+
+Cambia el fondo de pantalla pulsando `Super+Ctrl+T` y seleccionando una imagen en la ventana emergente. Si no funciona, ejecuta `~/.config/quickshell/ii/scripts/switchwall.sh` en una terminal, sigue el mismo procedimiento, consulta los registros e intenta resolverlo o envíalo a una incidencia/discusión.
+
+## Falta el ícono de alguna aplicación en el dock/vista general
+
+Técnicamente, no es posible tener íconos perfectos. Los íconos se infieren a partir de la clase de cada aplicación, que no necesariamente coincide con el nombre de su ícono.
+
+Posibles soluciones:
+### Aplicaciones GTK: Usa `gsettings` para configurar el tema de íconos
+
+Es posible que el ícono de tu aplicación no esté disponible en el paquete de íconos predeterminado. En ese caso, puedes cambiarlo por otro.
+
+Por ejemplo, puedes usar [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme).
+No se usa por defecto debido a la preferencia de @end-4, pero tiene una gran compatibilidad con diversas aplicaciones.
+
+```sh
+gsettings set org.gnome.desktop.interface icon-theme Papirus
+```
+
+Por supuesto, primero debes instalarlo. Para Arch Linux, usa `sudo pacman -S papirus-icon-theme`.
+
+### Aplicaciones Qt: Edita la configuración de kde-material-you-colors
+
+Abre `~/.config/kde-material-you-colors/config.conf`
+Busca estas líneas y edítalas a tu preferencia.
+```ini
+# ...
+iconslight = breeze-plus
+# ...
+iconsdark = breeze-plus-dark
+```
+
+## Los controles de música no aparecen
+
+> Referencia: [end-4/dots-hyprland#168](https://github.com/end-4/dots-hyprland/issues/168) (Nota: Problema antiguo para la versión AGS)
+
+- Asegúrate de que tu reproductor sea compatible con MPRIS (aquí tienes una lista: [MPRIS - Arch Wiki](https://wiki.archlinux.org/title/MPRIS))
+- Si usas un navegador, instala la extensión Plasma Integration:
+  - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plasma-integration/)
+  - [Chromium](https://chrome.google.com/webstore/detail/plasma-integration/cimiefiiaegbelhefglklhhakcgmhkai)
+
+Asegúrate de que el paquete `plasma-browser-integration` (para Arch, busca el paquete correspondiente si no usas Arch) esté instalado.
+
+Luego, cuando Firefox esté reproduciendo contenido multimedia, el siguiente comando
+```bash
+dbus-send --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListNames|grep mpris
+```
+the output should include
+```plain
+string "org.mpris.MediaPlayer2.plasma-browser-integration"
+```
+Solo funcionarán los nombres que comiencen con "plasma-browser-integration". Otros no.
+
+Si por alguna razón Firefox sigue sin mostrar dbus `org.mpris.MediaPlayer2.plasma-browser-integration`,
+considera los siguientes pasos:
+1. Crea un nuevo perfil con `firefox --ProfileManager`.
+2. Inicia Firefox con el nuevo perfil e instala de nuevo la extensión Plasma Integration.
+3. Reinicia Firefox con el nuevo perfil e inténtalo de nuevo.
+- _Nota: `playerctl -F metadata` también puede ser útil para la depuración._
+
+## Aparecen nombres extraños en los íconos en lugar de los íconos
+- Asegúrate de que la fuente Material Symbols (no Material Icons) esté instalada.
+  - En Arch, usa el paquete `ttf-material-symbols-variable-git`.
+  - Si tu distribución no tiene un paquete para ello, instálalo manualmente:
+    - Descarga los archivos .ttf del [repositorio de Material Symbols](https://github.com/google/material-design-icons/tree/master/variablefont).
+    - Colócalos en `~/.local/share/fonts`.
+    - Actualiza la caché de fuentes con `fc-cache -fv`.
+    - Reinicia la terminal con `Ctrl`+`Super`+`R`.
+
+## `loginctl lock-session` no hace nada.
+> Referencia: [end-4/dots-hyprland#278](https://github.com/end-4/dots-hyprland/issues/278).
+
+Según [esta publicación de los foros de Arch Linux](https://bbs.archlinux.org/viewtopic.php?pid=1311990#p1311990):
+> Para que esto funcione, es necesario que algo escuche las señales dbus de systemd-logind.
+
+Hypridle puede ser ese "algo", lo que significa que debes asegurarte de que esté en ejecución,
+y luego `loginctl lock-session` enviará una señal a hypridle.
+Como resultado, hypridle bloqueará la pantalla ejecutando `$lock_cmd` definido en su configuración `~/.config/hypr/hypridle.conf`.
+
+Consulta la [Wiki de Hyprland](https://wiki.hypr.land/Hypr-Ecosystem/hypridle/#configuration) para obtener más información. 
+
+## Parpadeo del brillo de la pantalla
+
+Consulta [esta entrada del FAQ de la Wiki de Hyprland](https://wiki.hypr.land/FAQ/#my-monitor-has-flickering-brightness-when-i-turn-on-vrr)
+
+## El botón de Wi-Fi de la barra lateral no funciona
+- Asegúrate de tener instalado `NetworkManager`. Para distribuciones basadas en Arch, ejecuta:
+  ```bash
+  sudo pacman -Q NetworkManager
+  sudo pacman -S NetworkManager  # si no está instalado
+  ```
+- Asegúrate de que `NetworkManager` esté ejecutándose.
+  ```bash
+  sudo systemctl status NetworkManager
+  # si no está ejecutándose, habilítalo e inícialo
+  sudo systemctl enable NetworkManager
+  sudo systemctl start NetworkManager
+  ```
+  Reinicia Quickshell para aplicar los cambios.
+- Si terminaste usando otro administrador de red (como `iwd`) para configurar el Wi-Fi (porque el interruptor de la barra lateral no funciona), puedes configurar `NetworkManager` para que use `iwd` como backend y así evitar confusiones (no puedes tener dos servicios controlando el Wi-Fi al mismo tiempo).
+  - Crea el archivo de configuración del backend para `NetworkManager`:
+    ```bash
+    sudo nano /etc/NetworkManager/conf.d/wifi_backend.conf
+    ```
+  - Agrega lo siguiente:
+    ```ini
+    [device]
+    wifi.backend=iwd
+    ```
+  - Guarda el archivo y reinicia Quickshell para aplicar los cambios.
+
+# Preguntas relacionadas a la configuración
+
+## ¿Cómo evito que Telegram u otras aplicaciones de mensajería roben el foco en los mensajes nuevos?
+- Establece la variable `misc:focus_on_activate` de Hyprland a `false`.
+
+## ¿Cómo desactivo las funciones relacionadas con anime?
+- Abre la applicación Ajustes (`Super`+`I`), ve a General y selecciona "No" para la política "Weeb".
+
+## ¿Cómo desactivo la IA o la restrinjo a modelos locales?
+
+Abre la applicación Ajustes (`Super`+`I`), ve a General y cambia la política "IA".
+
+## ¿Cómo elimino el redondeo falso de la pantalla?
+
+Hay una opción en la applicación Ajustes. Explórala.
+
+## Los colores de la terminal no son muy legibles
+
+En la applicación Ajustes, ve a la sección "Avanzado". Reduce el valor de Armonía de la terminal.
+
+## ¿Existe una configuración rápida de Proxy/VPN? Estoy en Rusia y mi proveedor de internet no quiere que vea hentai
+
+Para eludir las restricciones de contenido, shell ofrece una opción rápida para activar Cloudflare Warp si lo tienes instalado. Puedes consultar la sección correspondiente en la página de Configuración.
+
+## ¿Cómo habilitar la transparencia?
+
+Consulta [#1991](https://github.com/end-4/dots-hyprland/discussions/1991)
+
+# Hacking
+
+## Quiero [hacer esta cosa muy específica]
+
+Prueba https://deepwiki.com/end-4/dots-hyprland

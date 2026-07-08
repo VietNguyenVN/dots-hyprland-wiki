@@ -1,23 +1,23 @@
 ---
 title: Configuración
 layout: /src/layouts/autonum.astro
-lastUpdated: 2026-07-07
+lastUpdated: 2026-07-08
 ---
 
 # Configuración de Hyprland
 
 Hyprland es responsable de...
-- atajos de teclado
-- variables de entorno
-- pantallas/monitores/espacios de trabajo
-- animaciones de ventana
+- Atajos de teclado.
+- Variables de entorno.
+- Pantallas/monitores/espacios de trabajo.
+- Animaciones de ventana.
 - ...
 
 Consulta la [Wiki de Hyprland](https://wiki.hypr.land/) para obtener instrucciones generales de configuración. A continuación, solo se documentan los detalles específicos de los dotfiles.
 
 - `~/.config/hypr/` es la carpeta de configuración de Hyprland.
-- La subcarpeta `hyprland` contiene las configuraciones predeterminadas.
-- La subcarpeta `custom` es para tus configuraciones adicionales.
+  - La subcarpeta `hyprland` contiene las configuraciones predeterminadas.
+  - La subcarpeta `custom` es para tus configuraciones adicionales.
 
 Puedes realizar cambios en la subcarpeta anterior, pero se sobrescribirán si decides actualizar los dotfiles.
 
@@ -31,7 +31,7 @@ Si encuentras algún problema con Hyprland después de actualizarlo con `./setup
 
 # Configuración de Quickshell
 
-Quickshell ie responsable de elementos shell como la barra principal y barra laterales.
+Quickshell es responsable de elementos shell como la barra principal y barra laterales.
 
 ## Configuración simple
 
@@ -41,9 +41,9 @@ Pulsa `Super`+`I` o el botón de engranaje en la barra lateral derecha para abri
 
 ### Edición de archivo de configuración
 
-El archivo de configuración es `~/.config/illogical-impulse/config.json`
+El archivo de configuración es `~/.config/illogical-impulse/config.json`.
 
-Para entender las opciones y valores definidos, consulta `~/.config/quickshell/ii/modules/common/Config.qml`
+Para entender las opciones y valores predeterminados, consulta `~/.config/quickshell/ii/modules/common/Config.qml`.
 
 :::note
 Para configuraciones que no se limitan a Quickshell, consulta la sección "Varios".
@@ -56,22 +56,22 @@ Alternativamente, edita `time.format` en el archivo de configuración. Consulta 
 
 ## Configuración avanzada
 
-- Edita los archivos en `~/.config/quickshell/ii`
-- Consulta la [documentación de Quickshell](https://quickshell.outfoxxed.me/docs/types/)
+- Edita los archivos en `~/.config/quickshell/ii`.
+- Consulta la [documentación de Quickshell](https://quickshell.outfoxxed.me/docs/types/).
   - Se recomienda revisar al menos las páginas de Introducción, Posicionamiento y Lenguaje QML.
 
 # Varios
 
 ## Temas de color
 
-### Vscode
+### Visual Studio Code
 
 - Instala la extensión [Material Code](https://marketplace.visualstudio.com/items?itemName=rakib13332.material-code) y luego selecciona un fondo de pantalla.
 - Ajustes opcionales
   - Puedes cambiar la opción "material-code.syntaxTheme", que tiene una configuración muy rara.
-  - Ejecuta "Material Code: Aplicar estilos" para añadir esquinas redondeadas. Si VSCode indica que la instalación está dañada, puedes seleccionar "No volver a mostrar".
+  - Ejecuta "Material Code: Aplicar estilos" para añadir esquinas redondeadas. Si Visual Studio Code indica que la instalación está dañada, puedes seleccionar "No volver a mostrar".
 
-Esto funciona con la versión propietaria de Microsoft. Si usas alguna versión esquiza, no garantizamos que funcione. Bueno, solo se trata de rutas de archivo diferentes, así que no dudes en crear un PR para el fork de VSCode que uses. El script que gestiona el color se encuentra en `dots/.config/quickshell/ii/scripts/colors/code/material-code-set-color.sh`.
+Esto funciona con la versión propietaria de Microsoft. Si usas alguna versión esquiza, no garantizamos que funcione. Bueno, solo se trata de rutas de archivo diferentes, así que no dudes en crear un PR para el fork de Visual Studio Code que uses. El script que gestiona el color se encuentra en `dots/.config/quickshell/ii/scripts/colors/code/material-code-set-color.sh`.
 
 ## Cambiar la escala de la interfaz (todo)
 
@@ -173,7 +173,7 @@ El comando `loginctl lock-session` enviará una señal al proceso `hypridle` en 
         ```bash
         warp-cli status
         ```
-        Debería de mostrar `Status update :` seguido `Connected` o `Disconnected` según el estado actual de conexión.  
+        Debería de mostrar `Status update :` seguido de `Connected` o `Disconnected` según el estado actual de conexión.  
         También puedes revisar el estado de la conexión visitando la página [1.1.1.1 Connection Information](https://1.1.1.1/help).  
   6. *(Opcional)* Si deseas configurar el modo de funcionamiento de WARP (por ejemplo, crear un túnel mediante WARP y usar DNS-over-TLS para las consultas DNS), ejecuta:
         ```bash
