@@ -15,7 +15,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 - [Automatizado](#instalación-automatizada): con un script.
 - [Manual](#instalación-manual): clona y pega manualmente.
-- [Forks de la comunidad](#forks): installación especializada para ciertas distribuciones.
+- [Forks de la comunidad](#forks): instalación especializada para ciertas distribuciones.
 - [Distribuciones de terceros](#distribuciones-de-terceros): sistemas operativos que ofrecen illogical-impulse listo para usar.
 
 :::tip[Migración de versión AGS]
@@ -263,7 +263,7 @@ cd ~/.cache/dots-hyprland && git stash && git pull && ./setup install
 ```
 :::
 
-Por el momento, no tenemos de un verificador de actualizaciones ni un sistema de actualización automatizado. Dado que el script de instalación está diseñado para ser idempotente, para actualizar los dotfiles, deberás ejecutar el script de instalación nuevamente cada vez que desees actualizar, después de descargar los últimos cambios del repositorio.
+Por el momento, no tenemos un verificador de actualizaciones ni un sistema de actualización automatizado. Dado que el script de instalación está diseñado para ser idempotente, para actualizar los dotfiles, deberás ejecutar el script de instalación nuevamente cada vez que desees actualizar, después de descargar los últimos cambios del repositorio.
 1. Navega al directorio del repositorio con `cd`. Por defecto, debería estar en `~/.cache/dots-hyprland`, a menos que hayas clonado el repositorio en otra ubicación.
 2. Ejecuta `git stash` para guardar los cambios locales. Idealmente, la instalación no debería modificar los archivos locales gestionados por Git, pero esto podría ocurrir inesperadamente, por lo que deberás guardarlos antes de descargar los últimos cambios.
 3. Ejecuta `git pull` para obtener y descargar los últimos cambios del repositorio.
