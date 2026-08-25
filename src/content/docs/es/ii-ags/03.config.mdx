@@ -1,15 +1,23 @@
 ---
 title: Configuración
 layout: /src/layouts/autonum.astro
-lastUpdated: 2025-04-03
+lastUpdated: 2026-07-08
 ---
+
+:::caution
+La versión AGS de illogical impulse ya no recibe soporte.
+
+Aunque aún podría funcionar, tendrás que solucionar los problemas por tu cuenta.
+
+Una nueva incidencia de la versión AGS probablemente se cierre por no estar previsto.
+:::
 
 # Configurando Hyprland
 Lo siguiente y muchas otras cosas son impulsadas por Hyprland.
-- combinaciones de teclas globales
-- variables de entorno
-- pantallas/monitores/espacios de trabajo
-- animaciones/decoraciones de ventanas
+- Atajos de teclado globales.
+- Variables de entorno.
+- Pantallas/monitores/espacios de trabajo.
+- Animaciones/decoraciones de ventanas.
 - ...
 
 Referencia: [Hyprland Wiki](https://wiki.hyprland.org/)
@@ -37,22 +45,22 @@ windowrule = noblur,.*  # Desactiva el desenfoque para ventanas. Mejora sustanci
 
 # Configurando AGS
 Lo siguiente y algunas otras cosas son impulsadas por AGS.
-- barra superior
-- barras laterales
-- hoja de trucos
-- notificación
-- widget de vista general
+- Barra principal.
+- Barras laterales.
+- Hoja de trucos.
+- Notificación.
+- Widget de vista general.
 
 ## Para usuarios finales
 Edita `~/.config/ags/user_options.jsonc`, que no será sobrescrito por `install.sh` cuando actualices.
 Puedes configurar cosas como:
-- Proveedor predeterminado de asistente tipo ChatGPT
-- Velocidad de animación
-- Formato de hora
+- Proveedor predeterminado de asistente tipo ChatGPT.
+- Velocidad de animación.
+- Formato de hora.
 - ...
 
 :::note
-Para configuraciones que no están limitadas a AGS, consulta la sección "Misc".
+Para configuraciones que no están limitadas a AGS, consulta la sección "Varios".
 :::
 ### Configurar formato de fecha y hora
 
@@ -65,7 +73,12 @@ En su lugar, aparecerá un widget del clima en esta posición.
 
 La ciudad para el clima se detecta por `curl ipinfo.io` de forma predeterminada, o se establece explícitamente en `~/.config/ags/user_options.jsonc`.
 
-### Configurar combinaciones de teclas
+:::note
+Si no estás seguro del nombre de la ciudad,
+como usamos [wttr.in](https://github.com/chubin/wttr.in) para proporcionar información meteorológica, puedes encontrar la respuesta allí.
+:::
+
+### Configurar atajos de teclado
 Las combinaciones de teclas a configurar son limitadas y necesitas consultar el documento de gdk para conocer las teclas, pero funciona.
 
 Consulta [#5](https://github.com/end-4/dots-hyprland-wiki/issues/5) para más información.
@@ -95,16 +108,16 @@ chmod +x ~/.cache/ags/user/scripts/*.sh
 :::
 
 Para más personalización:
-- Intervalo de sondeo, en milisegundos: `~/.cache/ags/user/scripts/custom-module-interval.txt` (predeterminado = 5000)
-- Script de acción de clic izquierdo: `~/.cache/ags/user/scripts/custom-module-leftclick.sh`
-- Script de acción de clic derecho: `~/.cache/ags/user/scripts/custom-module-rightclick.sh`
+- Intervalo de sondeo, en milisegundos: `~/.cache/ags/user/scripts/custom-module-interval.txt` (predeterminado = 5000).
+- Script de acción de clic izquierdo: `~/.cache/ags/user/scripts/custom-module-leftclick.sh`.
+- Script de acción de clic derecho: `~/.cache/ags/user/scripts/custom-module-rightclick.sh`.
 ## Para nerds (dudamos que no lo seas)
-- Consulta [AGS Docs](https://aylur.github.io/ags-docs)
-- También notas de desarrollo (consulta la barra lateral)
+- Consulta [AGS Docs](https://aylur.github.io/ags-docs).
+- También notas de desarrollo (consulta la barra lateral).
 
 
 # Varios
-## Cambiar el tamaño de la interfaz / cambiar el tamaño de la fuente
+## Cambiar el tamaño de la interfaz / de la fuente
 Cambiar el tamaño de la fuente también cambiará la escala de la interfaz para AGS.
 - Usando `gsettings`:
 ```bash
@@ -115,13 +128,35 @@ gsettings set org.gnome.desktop.interface font-name 'Rubik 11'
 ```
 
 ## Configurar pantalla de bloqueo
+### Bloqueo automático de pantalla
 Referencia: [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/)
 
-Edita `~/.config/hypr/hyprlock.conf`.
+Edita `~/.config/hypr/hyprlock.conf` según tus necesidades.
+### Hyprlock personalizado
+Referencia: [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/)
+
+Hyprlock es el proveedor de bloqueo de pantalla predeterminado.
+
+Edita `~/.config/hypr/hyprlock.conf` según tus necesidades.
 
 Por ejemplo, para configurar el formato de fecha y hora, cambia el valor del `text` **que corresponde al bloqueo**.
+### Usar otro proveedor de bloqueo de pantalla
+Referencia: [Arch Wiki](https://wiki.archlinux.org/title/Session_lock)
 
+Tomemos `swaylock` como ejemplo.
+
+Edita `~/.config/hypr/hypridle.conf` y modifica el valor de `$lock_cmd` de la siguiente manera:
+```ini
+$lock_cmd = swaylock
+```
+Asegúrate de que hypridle esté ejecutándose (normalmente se iniciará automáticamente si tienes `exec-once = hypridle` en la configuración de Hyprland).
+
+Como resultado, `loginctl lock-session` llamará a `swaylock` para bloquear la pantalla.
+
+:::note[Cómo]
+El comando `loginctl lock-session` enviará una señal al proceso `hypridle` en ejecución, y luego `hypridle` ejecutará el comando a partir del valor de `$lock_cmd`.
+:::
 ## Cloudflare WARP
-- Esto podría ayudarte a evitar las restricciones de tu ISP y proporcionar una internet más rápida
-- Habrá un botón en la barra lateral derecha para activar/desactivar WARP si está instalado
-- Para instalar Cloudflare WARP, ejecuta `yay -S cloudflare-warp-bin && sudo systemctl enable warp-svc --now`
+- Esto podría ayudarte a evitar las restricciones de tu ISP y proporcionar una internet más rápida.
+- Habrá un botón en la barra lateral derecha para activar/desactivar WARP si está instalado.
+- Para instalar Cloudflare WARP, ejecuta `yay -S cloudflare-warp-bin && sudo systemctl enable warp-svc --now`.

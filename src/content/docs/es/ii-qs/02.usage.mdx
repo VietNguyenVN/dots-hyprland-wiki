@@ -1,0 +1,162 @@
+---
+title: Uso
+layout: /src/layouts/autonum.astro
+lastUpdated: 2026-07-08
+---
+
+Esta página documenta algunos detalles no tan evidentes. No todo está aquí, así que explora...
+
+# General
+
+Presiona `Super`+`/` para una lista de atajos de teclado.
+
+<details> 
+  <summary>En caso de que no funcione, aquí tienes una imagen.</summary>
+
+  <img width="1412" height="828" alt="image" src="https://github.com/user-attachments/assets/8f7bd216-9e03-47e3-8709-0008772a4133" />
+
+</details>
+
+## Vista general
+
+- Ábrela con `Super` o `Super`+`Tab`.
+- Arrastra una ventana a otro espacio de trabajo para enviarla allí.
+- Clic con el botón central del ratón para cerrar la ventana.
+
+## Lanzador de aplicaciones
+
+- Incluido en la vista general. Solo tienes que empezar a escribir.
+- Los resultados pueden incluir:
+  - Búsqueda de aplicaciones.
+  - Resultado matemático.
+  - [Prefijo: `/`] Acciones del lanzador.
+  - [Prefijo: `;`] Historial del portapapeles.
+  - [Prefijo: `:`] Emojis.
+  - Acciones adicionales para el contenido escrito: ejecutar comando, realizar búsqueda.
+
+- Acciones del lanzador no evidentes:
+  - /superpaste NUM_OF_ENTRIES[i]: Pega NUM_OF_ENTRIES últimas entradas del portapapeles. Especifica `i` para imágenes.
+  - /todo TASK: Agrega elemento a la lista de tareas.
+
+## Barra principal
+- Widget multimedia:
+  - Clic con el botón central: reproducir/pausar.
+  - Clic con el botón derecho: siguiente pista.
+  - Botón 4/Botón 5 del ratón: pista anterior/siguiente.
+- Brillo: desplázate con la rueda en la esquina superior izquierda.
+- Volumen: desplázate con la rueda en la esquina superior derecha.
+- Espacios de trabajo:
+  - Botón 4 del ratón: alternar el espacio de trabajo especial.
+  - Clic con el botón derecho: abrir la vista general.
+
+# Barra lateral izquierda
+
+## Controles generales
+- Autocompletado en las pestañas de Inteligencia y Anime.
+  - Cuando aparezcan sugerencias sobre el área de escritura, usa las teclas de flecha arriba/abajo para seleccionar la opción deseada y luego presiona Tab para confirmar tu elección.
+- ¿Quieres llevarte el asistente contigo? Para separar la barra lateral en una ventana, pulsa `Super`+`Alt`+`A`.
+
+## Chat con IA
+
+- Escribe `/model` para seleccionar un modelo. Los modelos Ollama instalados localmente se detectan automáticamente.
+- Escribe `/key` para instrucciones en cómo obtener una llave API para modelos en línea.
+- Actualmente, los modelos Gemini con herramientas pueden editar la configuración de tu shell. Por ejemplo, puedes indicarle que "oculte los íconos de las aplicaciones en mis espacios de trabajo".
+
+## Traductor
+
+Gestionado con la herramienta de línea de comandos `trans`. No hay mucho que añadir...
+
+## Anime boorus
+
+- Escribe `/mode` para ver los proveedores disponibles.
+- Escribe una o varias etiquetas para ver resultados. Aparecerán sugerencias mientras escribes.
+- Escribe un número para seleccionar la página de los resultados a consultar.
+
+# Fondo de pantalla y colores
+- Para elegir un fondo de pantalla, pulsa `Ctrl`+`Super`+`T` y selecciona una imagen. Esto también:
+  - Cambiará el color del shell, aplicaciones Qt y aplicaciones GTK.
+  - Cambiará la posición del reloj de fondo a la zona menos ocupada de la imagen (actualmente solo funciona bien con un solo monitor).
+
+# Herramienta de captura de pantalla
+
+- `Super`+`Shift`+`S`: Recorte de pantalla | arrastra con clic izquierdo para copiar al portapapeles, arrastra con clic derecho para anotar.
+- `Super`+`Shift`+`A`: Búsqueda con Google Lens.
+- `Super`+`Shift`+`X`: Reconocimiento de texto.
+
+# Traducción de pantalla
+
+Traduce el contenido de la pantalla mediante la API de Google Cloud Vision y Translation. Esta sección te guiará a través del proceso de configuración (que puede resultar algo complejo).
+
+## Requisitos previos
+
+- Tienes una cuenta de Google.
+- Aunque no se te cobrará nada a menos que actives una cuenta completa, Google requiere una tarjeta de crédito/débito para prevenir el fraude. Una tarjeta virtual con un centavo debería funcionar, siempre y cuando sea legítima.
+
+## Configuración
+
+- Navega a la [Consola de Google Cloud](https://console.cloud.google.com/) y crea o selecciona un proyecto. Puede ser el mismo proyecto que usaste para el API de Gemini si la configuraste para el chat de la barra lateral.
+- Habilita las siguientes APIs:
+  - [Cloud Vision API](https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com)
+  - [Cloud Translation API](https://console.cloud.google.com/marketplace/product/google/translate.googleapis.com)
+- En el menú de navegación izquierdo, ve a la sección **Facturación**. Pulsa **Vincular una cuenta de facturación** e introduce tus datos según sean requeridos.
+- En el menú de navegación izquierdo, ve a **IAM y administración** > **Cuentas de servicio**. Pulsa **Crear cuenta de servicio** y, posteriormente:
+  - Paso 1: Introduce nombres. No importa lo que introduzcas.
+  - Paso 2: Permisos: añade los roles **Consumidor de Service Usage** y **Usuario de la API de Cloud Translation** y pulsa **Continuar**.
+  - Paso 3: Solo presiona Listo.
+- Ahora deberías ver una cuenta de servicio en la lista. Haz clic en el menú de tres puntos de la derecha y luego **Administrar claves**.
+  - Haz clic en **Agregar clave** > **Crear clave nueva**.
+  - Selecciona el tipo de clave JSON (debería ser el predeterminado) y pulsa **Crear**. Se descargará un archivo JSON.
+- Abre el archivo JSON descargado y copia su contenido.
+- Abre el traductor de pantalla con `Super`+`Shift`+`T`, luego:
+  - Haz clic en el botón con ícono de llave en la parte inferior de la pantalla.
+  - Pega el contenido JSON y pulsa Enter. La traducción comenzará.
+- Después, puedes eliminar el archivo JSON, ya que está guardado de forma segura en el llavero.
+  - Nota: Actualmente, para volver a verlo, tendrás que consultar la entrada del llavero de almacenamiento seguro de `illogical-impulse`.
+
+# Grupos de espacios de trabajo
+
+## Navegación y gestión de espacio de trabajo
+
+Si 10 espacios de trabajo no son suficientes, puede usar el siguiente grupo, hasta el límite de Hyprland. Para iniciar, simplemente desplaza de más el widget de espacio de trabajo en la barra lateral derecha (o usa atajos de teclado) para cambiar a un nuevo grupo.
+
+Los atajos de teclado y los widgets de la consola funcionan sin problemas en el grupo de espacios de trabajo seleccionado. No es necesario configurar nada adicional si no cambias la cantidad de espacios de trabajo que se muestran en el indicador de espacio de trabajo o en la vista general.
+
+- **Navegando / moviendo espacios de trabajo dentro de un grupo**: Aplican los atajos estándar de Hyprland.
+  - `Super` + `2` → espacio de trabajo **12** si estás en el espacio **11-20 (grupo 2)**.
+  - `Super` + `Alt` + `3` mueve discretamente la ventana enfocada → espacio de trabajo **23** si estás en el espacio **21-30 (grupo 3)**.
+
+- **Navegando entre grupos**:
+  - Considera agregar los siguientes atajos de Hyprland para saltar a grupos de espacios de trabajo adyacentes.
+    ```ini title="~/.config/hypr/custom/keybinds.conf"
+    hl.bind("SUPER + ALT + Z", hl.dsp.focus({ workspace = "r-10" }))
+    hl.bind("SUPER + ALT + X", hl.dsp.focus({ workspace = "r+10" }))
+    ```
+- La **Vista general** y el **Indicador de espacio de trabajo** se adaptan automáticamente. El contenido mostrado depende del grupo de espacio de trabajo actual.
+
+:::tip
+Si deseas modificar los atajos de teclado o incluir [más funcionalidades](https://wiki.hypr.land/Configuring/Dispatchers/) a la navegación de espacios de trabajo, usa el script `~/.config/hypr/hyprland/scripts/workspace_action.sh`, en vez de `hyprctl dispatch`. Esto determinará el grupo de espacio de trabajo actual utilizando el ID del espacio de trabajo activo y lo dirigirá al espacio de trabajo adecuado.
+:::
+
+## Consideraciones para múltiples monitores
+
+Considera estas estrategias para la gestión eficaz de múltiples monitores:
+- Asigna el grupo 1 (espacios de trabajo 1-10) al monitor principal y el grupo 2 (espacios de trabajo 11-20) al monitor secundario:
+  - Al iniciar el sistema, mueve manualmente el espacio de trabajo inicial del monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, y luego `Ctrl` + `Super` + `Derecha`.
+  - Esto también creará un widget de vista general independiente para cada monitor.
+- Usa la [vinculación de espacios de trabajo](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén los nombres de todos tus monitores usando `hyprctl monitors | grep Monitor`.
+  ```ini title="~/.config/custom/general.conf"
+  # Vincula los espacios de trabajo 1-10 (grupo 1) al monitor primario
+  for i = 1, 10 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "eDP-1", default = true })
+  end
+
+  # Vincula los espacios de trabajo 11-20 (group 2) al monitor secundario
+  for i = 11, 20 do
+    hl.workspace_rule({ workspace = tostring(i), monitor = "HDMI-A-1", default = true })
+  end
+  ```
+- Enfócate en dos espacios de trabajo a la vez en cada monitor y mueve/intercambia ventanas entre monitores/grupos (usando `Super` + `Izquierda/Derecha/Arriba/Abajo` o `Super` + `Shift` + `Izquierda/Derecha/Arriba/Abajo`) según sea necesario.
+
+:::note
+Los grupos de espacios de trabajo no son compatibles de forma nativa con Hyprland ni con ningún sistema de barra de estado o widget. Esta configuración lo consigue simplemente modificando los despachadores de Hyprland y la configuración del shell.
+:::

@@ -1,27 +1,132 @@
 ---
 title: Solución de problemas
 layout: /src/layouts/autonum.astro
-lastUpdated: 2024-12-13
+lastUpdated: 2026-07-08
 ---
 
-:::tip[Consejo]
-Presiona `Ctrl`+`F` para buscar o consulta la barra lateral derecha para encontrar tu problema.
+:::caution
+La versión AGS de illogical impulse ya no recibe soporte.
+
+Aunque aún podría funcionar, tendrás que solucionar los problemas por tu cuenta.
+
+Una nueva incidencia de la versión AGS probablemente se cierre por no estar previsto.
 :::
 
-# Pistas
+:::tip
+En esta página, presiona `Ctrl`+`F` para buscar o ve la barra lateral derecha para encontrar tu problema.
+:::
 
-- Si hay un problema con algo, lo primero que debes hacer es abrir una terminal (`Super`+`T`) y ejecutarlo. Busca errores/advertencias que puedan ser problemáticos.
-- La barra, las barras laterales, la hoja de trucos, etc. son impulsados por AGS. Abre una terminal y ejecuta `pkill ags; ags`.
+# Lectura obligatoria
+## Requisito previo para la variable de entorno
+:::note
+Ya hemos dado un aviso relacionado en `install.sh`, pero algunos usuarios lo ignoraron al reportar problemas.
+:::
 
-> Usa el sentido común. Si no puedes resolverlo, [abre una discusión](https://github.com/end-4/dots-hyprland/discussions) para obtener ayuda.
+La variable de entorno `$ILLOGICAL_IMPULSE_VIRTUAL_ENV` debe estar configurada correctamente; de ​​lo contrario, la configuración de AGS no funcionará.
 
-# Algunos problemas
+Hemos creado una configuración predeterminada en `~/.config/hypr/hyprland/env.conf`, pero debes asegurarte de que este archivo de configuración esté incluido en `~/.config/hypr/hyprland.conf`. A menudo es necesario reiniciar Hyprland.
+
+Puedes ejecutar `./diagnose` para verificar su valor.
+
+### Ejemplo esperado
+```
+[===diagnose===] declare -p ILLOGICAL_IMPULSE_VIRTUAL_ENV
+declare -x ILLOGICAL_IMPULSE_VIRTUAL_ENV="/home/user/.local/state/ags/.venv"
+[---SUCCESS---]
+```
+Donde `user` es tu nombre de usuario.
+
+### Ejemplo inesperado 1
+```
+[===diagnose===] declare -p ILLOGICAL_IMPULSE_VIRTUAL_ENV
+./diagnose: line 30: declare: ILLOGICAL_IMPULSE_VIRTUAL_ENV: not found
+[---EXIT 1---]
+```
+Para el caso anterior:
+- Es muy probable que aún estés usando el archivo `~/.config/hypr/hyprland.conf` antiguo y hayas olvidado reemplazar su contenido con `~/.config/hypr/hyprland.conf.new`. Simplemente ejecuta `cd ~/.config/hypr;mv hyprland.conf{,.old};mv hyprland.conf{.new,}`.
+- Asegúrate de haber reiniciado Hyprland.
+
+### Ejemplo inesperado 2
+```
+[===diagnose===] declare -p ILLOGICAL_IMPULSE_VIRTUAL_ENV
+declare -x ILLOGICAL_IMPULSE_VIRTUAL_ENV="\$XDG_STATE_HOME/ags/.venv"
+[---SUCCESS---]
+```
+En el caso anterior, `$XDG_STATE_HOME` no se expande, lo cual resulta muy extraño (¿quizás un error de Hyprland?).
+- Asegúrate de que al ejecutar `install.sh`, no hayas omitido y hayas ejecutado correctamente `install-python-packages()`, lo que debería generar un directorio `~/.local/state/ags/.venv` no vacío.
+- Puedes especificar su valor directamente en `~/.config/hypr/custom/env.conf` de la siguiente manera:
+```ini
+env = ILLOGICAL_IMPULSE_VIRTUAL_ENV, /home/user/.local/state/ags/.venv
+```
+Y recuerda reemplazar `user` por tu nombre de usuario.
+
+## Acciones que deberías probar al menos una vez
+- Reinicia Hyprland o tu sistema, lo cual es necesario para aplicar los cambios en las variables de entorno.
+- Si hay problemas con AGS (por ejemplo, las "barras"), cambia el fondo de pantalla pulsando `Super+Ctrl+T` y seleccionando una imagen en la ventana emergente. Sin embargo, no siempre es efectivo, especialmente si el problema está en la instalación o en las variables de entorno.
+- El script `install.sh` es idempotente. Puedes ejecutarlo cuando quieras.
+
+## Cómo obtener registros
+- Si hay algún problema, abre una terminal (`Super`+`T`) y ejecuta el comando en la consola. Busca errores o advertencias que puedan ser problemáticos.
+- La barra principal, las barras laterales, la hoja de trucos, etc., funcionan con AGS. (Consejo: No es Waybar). Abre una terminal y ejecuta `pkill agsv1; agsv1`.
+
+## Información adicional
+- Busca en esta wiki (especialmente en esta página), así como en los [incidentes](https://github.com/end-4/dots-hyprland/issues) y [discusiones](https://github.com/end-4/dots-hyprland/discussions) existentes.
+- Usa el sentido común. Si no encuentras la solución, [abre una discusión](https://github.com/end-4/dots-hyprland/discussions) para obtener ayuda.
+
+# Algunos problemas y soluciones/alternativas
+## Problemas con AGS, tema/íconos/CSS de barras no funcionan
+> Referencia: [end-4/dots-hyprland#1010](https://github.com/end-4/dots-hyprland/issues/1010)
+
+Cambia el fondo de pantalla pulsando `Super+Ctrl+T` y seleccionando una imagen en la ventana emergente.
+
+## Falta el ícono de alguna aplicación en el dock/vista general
+> Referencia: [end-4/dots-hyprland#497 comentario](https://github.com/end-4/dots-hyprland/issues/497#issuecomment-2108212444) [end-4/dots-hyprland#487](https://github.com/end-4/dots-hyprland/issues/487)
+
+Pruebe las siguientes soluciones/alternativas:
+### Usa `gsettings` para configurar el tema de íconos
+:::note
+Esto es adecuado para la siguiente situación:
+- La clase de la ventana de la aplicación tiene un ícono idéntico en el tema de íconos A, pero no en el B.
+- Está usando el tema de íconos B, lo que significa que el problema se resuelve al cambiar al tema de íconos A.
+:::
+
+Por ejemplo, [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) (recomendado, ya que abarca muchas aplicaciones):
+```sh
+gsettings set org.gnome.desktop.interface icon-theme Papirus
+```
+Por supuesto, primero debes instalarlo. Para Arch Linux, usa `sudo pacman -S papirus-icon-theme`.
+
+### Configurar sustituciones en `user_options.jsonc` de AGS
+:::note
+Esto es adecuado para la siguiente situación:
+- La aplicación tiene más de un nombre de clase de ventana (por ejemplo, `foot` y `footclient`), pero solo uno de ellos (por ejemplo, `foot`) tiene un ícono idéntico en el tema de íconos actual.
+- Estás de acuerdo en usar el mismo ícono para esas diferentes clases de ventana (por ejemplo, el mismo ícono para `foot` y `footclient`).
+:::
+
+Edita `~/.config/ags/user_options.jsonc` y añade una entrada dentro de `icons.substitutions`, por ejemplo:
+```js
+'icons': {
+    substitutions: {
+        'footclient': "foot",
+    },
+},
+```
+
+:::note
+Si es la primera vez que editas este archivo, consulta primero las instrucciones al principio de `user_options.jsonc`.
+:::
+
+### Configurar la ruta de búsqueda de íconos
+Esto es adecuado si tienes el archivo de íconos por separado.
+
+Modifica correctamente el archivo `icons.searchPaths` dentro de `~/.config/ags/user_options.jsonc`.
 
 ## Los controles de música no aparecen
+
 > Referencia: [end-4/dots-hyprland#168](https://github.com/end-4/dots-hyprland/issues/168)
 
 - Asegúrate de que tu reproductor tenga soporte Mpris (una lista: [Enlace de Arch Wiki](https://wiki.archlinux.org/title/MPRIS)).
-- Si es un navegador, instala la extensión de Integración de Plasma: [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plasma-integration/) o [Chromium](https://chrome.google.com/webstore/detail/plasma-integration/cimiefiiaegbelhefglklhhakcgmhkai) y `plasma-browser-integration` (esto es para Arch).
+- Si es un navegador, instala la extensión de Plasma Integration: [Firefox](https://addons.mozilla.org/en-US/firefox/addon/plasma-integration/) o [Chromium](https://chrome.google.com/webstore/detail/plasma-integration/cimiefiiaegbelhefglklhhakcgmhkai) y `plasma-browser-integration` (esto es para Arch).
 
 Luego, cuando Firefox esté reproduciendo medios, el siguiente comando
 ```bash
@@ -40,11 +145,39 @@ considera los siguientes pasos:
 3. Reinicia Firefox con el nuevo perfil y vuelve a intentarlo.
 - _Nota: `playerctl -F metadata` también puede ser útil para la depuración._
 
-## Los iconos no aparecen. Obtengo textos extraños en su lugar.
+## Los íconos no aparecen. Obtengo textos extraños en su lugar.
 - Debes estar perdiendo la fuente Material Symbols. Puedes descargar la fuente manualmente y luego ponerla en `~/.local/share/fonts`.
 - ¡Ten en cuenta que es Material <u>**Symbols**</u>, no Material <u>**Icons**</u>!
 - Recuerda ejecutar `fc-cache -fv` para actualizar la caché de fuentes. Un reinicio también funcionará.
 
+## `loginctl lock-session` no hace nada
+> Referencia: [end-4/dots-hyprland#278](https://github.com/end-4/dots-hyprland/issues/278)
+
+Según [esta publicación en los foros de Arch Linux](https://bbs.archlinux.org/viewtopic.php?pid=1311990#p1311990):
+> Para que esto funcione, es necesario que algo escuche las señales dbus de systemd-logind.
+
+Hypridle puede ser ese "algo", lo que significa que debes asegurarte de que esté en ejecución,
+y luego `loginctl lock-session` enviará una señal a hypridle.
+Como resultado, hypridle bloqueará la pantalla ejecutando `$lock_cmd` definido en su configuración `~/.config/hypr/hypridle.conf`.
+
+Consulta [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/#configuration) para más información.
+
+## Terminal: ¿Por qué no puedo interrumpir con Ctrl+C?
+- En `foot`, Ctrl+C está configurado para copiar texto. Para interrumpir, usa Ctrl+Shift+C.
+- ¿No quieres esto?
+  - Para eliminar esta vinculación: en `~/.config/foot/foot.ini`, comenta o elimina la línea que dice `clipboard-copy=Control+c`.
+  - Tal vez si usas aplicaciones de terminal mucho, sería una buena idea usar una terminal más rica en funciones.
+
+## Congelamiento aleatorio
+:::note
+Esto no está relacionado técnicamente con illogical-impulse.
+:::
+Ver https://github.com/end-4/dots-hyprland/issues/746 .
+
+# Problemas, soluciones y alternativas obsoletas
+El contenido a continuación ya no es útil porque se han producido cambios.
+
+Aun así, lo mantenemos aquí por si lo necesitamos de nuevo en el futuro.
 ## La instalación de AGS falló
 ### `PermissionError: [Errno 13] Permission denied: '/usr/local/lib/libgvc.so'`
 Ejecuta esto para verificar si este archivo pertenece a algún paquete (muy probablemente no, porque está dentro de `/usr/local`)
@@ -63,21 +196,3 @@ Elimina `./cache/ags` e instálalo nuevamente.
 A veces el paquete AUR no instala todas las dependencias por ti. Hyprland siempre está evolucionando y esto sucede cuando se agrega algo nuevo.
 - Revisa los registros y verifica si te dice que instales algo, luego intenta construirlo nuevamente.
 - Nota: Es posible que tengas que limpiar `~/.cache/yay`.
-
-## `loginctl lock-session` no hace nada
-> Referencia: [end-4/dots-hyprland#278](https://github.com/end-4/dots-hyprland/issues/278)
-
-Según [esta publicación en los foros de Arch Linux](https://bbs.archlinux.org/viewtopic.php?pid=1311990#p1311990):
-> Algo necesita escuchar las señales dbus de systemd-logind para que esto funcione.
-
-Hypridle es capaz de ser esta "cosa", lo que significa que debes asegurarte de que esté ejecutándose,
-y luego `loginctl lock-session` enviará una señal a hypridle,
-como resultado hypridle bloqueará la pantalla ejecutando el `$lock_cmd` definido en su configuración `~/.config/hypr/hypridle.conf`.
-
-Consulta [Hyprland Wiki](https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/#configuration) para más información.
-
-## Terminal: ¿Por qué no puedo interrumpir con Ctrl+C?
-- En `foot`, Ctrl+C está configurado para copiar texto. Para interrumpir, usa Ctrl+Shift+C.
-- ¿No quieres esto?
-  - Para eliminar esta vinculación: en `~/.config/foot/foot.ini`, comenta o elimina la línea que dice `clipboard-copy=Control+c`.
-  - Tal vez si usas aplicaciones de terminal mucho, sería una buena idea usar una terminal más rica en funciones.

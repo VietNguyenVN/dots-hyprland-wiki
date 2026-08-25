@@ -1,66 +1,80 @@
 ---
 title: Uso
 layout: /src/layouts/autonum.astro
-lastUpdated: 2024-12-13
+lastUpdated: 2026-07-08
 ---
+
+:::caution
+La versión AGS de illogical impulse ya no recibe soporte.
+
+Aunque aún podría funcionar, tendrás que solucionar los problemas por tu cuenta.
+
+Una nueva incidencia de la versión AGS probablemente se cierre por no estar previsto.
+:::
 
 # General
 Primero, para una lista de atajos de teclado, presiona `Super`+`/`.
 
 También incluye algunas Acciones para el lanzador.
 
-## Overview/lanzador
+## Vista general/lanzador de aplicaciones
 Presiona `Super` o `Super`+`Tab` para abrir.
 
 - **Ventanas**
-  - Arrastra para moverlas a diferentes espacios de trabajo
-  - Haz clic derecho para algunas opciones
+  - Arrastra para moverlas a diferentes espacios de trabajo.
+  - Haz clic derecho para algunas opciones.
 - **Buscar**
-  - <u>Cálculo</u>: Escribe algo que comience con un número
+  - <u>Cálculo</u>: Escribe algo que comience con un número.
   - <u>Comandos</u>: Serán detectados y mostrados si los escribes.
-    - Ejecuta sin interfaz por defecto
+    - Ejecuta sin interfaz por defecto.
     - Si el comando comienza con sudo, se lanzará en la terminal `foot`.
   - <u>Búsqueda de directorios</u>: Escribe un directorio comenzando con `~` o `/`.
-    - Se mostrarán subdirectorios si la ruta es correcta. Activar abre carpeta/archivo
-    - Presiona enter directamente en la entrada para abrir la carpeta/archivo escrito
-  - <u>Acciones</u>: Cada acción comienza con un `>`. Consulta la **hoja de trucos de atajos de teclado** para una lista
+    - Se mostrarán subdirectorios si la ruta es correcta. Activar abre carpeta/archivo.
+    - Presiona enter directamente en la entrada para abrir la carpeta/archivo escrito.
+  - <u>Acciones</u>: Cada acción comienza con un `>`. Consulta la **hoja de trucos de atajos de teclado** para una lista.
   - <u>Aplicaciones</u> por defecto, ¡por supuesto!
 
-## Controles de la barra
+## Controles de la barra principal
 - Medios:
   - Esquina superior derecha
-    - Clic medio: reproducir/pausar medios
-    - Clic derecho: siguiente pista
-    - Desplazar: cambiar volumen
-  - Haz clic en la pastilla de música para una ventana de controles
-- Brillo: Desplazar en la esquina superior izquierda
-- Lanzador/Overview: Haz clic derecho en el widget de espacio de trabajo
-- Teclado virtual: Clic medio en el widget de espacio de trabajo
-- Copiar texto en notificación: Haz clic y mantén presionado durante unos 800ms (referencia: [#224](https://github.com/end-4/dots-hyprland/issues/224#issuecomment-1923706599))
+    - Clic medio: reproducir/pausar medios.
+    - Clic derecho: siguiente pista.
+    - Desplazar: cambiar volumen.
+  - Haz clic en la pastilla de música para una ventana de controles.
+- Brillo: Desplazar en la esquina superior izquierda.
+- Lanzador/Overview: Haz clic derecho en el widget de espacio de trabajo.
+- Teclado virtual: Clic medio en el widget de espacio de trabajo.
+- Copiar texto en notificación: Haz clic y mantén presionado durante unos 800ms (referencia: [#224](https://github.com/end-4/dots-hyprland/issues/224#issuecomment-1923706599)).
 - Espacios de trabajo:
-  - Desplazar para cambiar espacios de trabajo
-  - Haz clic en un espacio de trabajo para enfocar
-  - Haz clic en el botón lateral (en ratones para juegos) para alternar espacio de trabajo especial (scratchpad)
+  - Desplazar para cambiar espacios de trabajo.
+  - Haz clic en un espacio de trabajo para enfocar.
+  - Haz clic en el botón lateral (en ratones para juegos) para alternar espacio de trabajo especial (scratchpad).
 
 # APIs
 
 _Disponibles en la barra lateral izquierda_
 
 ## Servicios de IA
-- Cada servicio de IA requiere una clave API
-  - Si no tienes una, habrá un aviso que te llevará al sitio web del proveedor cuando hagas clic
-  - Una vez que hayas seguido las instrucciones en ese sitio web y obtengas una clave, simplemente pégala y envíala en el cuadro de chat de la barra lateral y se guardará. El aviso anterior debería desaparecer y deberías poder usar la API
+- Cada servicio de IA requiere una clave API.
+  - Si no tienes una, habrá un aviso que te llevará al sitio web del proveedor cuando hagas clic.
+  - Una vez que hayas seguido las instrucciones en ese sitio web y obtengas una clave, simplemente pégala y envíala en el cuadro de chat de la barra lateral y se guardará. El aviso anterior debería desaparecer y deberías poder usar la API.
   - En caso de que necesites cambiar la clave, usa el comando `/key`. Te dirá qué hacer.
 
 ## Servicios Waifu
 - No se requiere clave API, ¡yay!
-- Para la pestaña "Waifus", ingresa una categoría. Consulta su documentación para una lista: https://waifu.pics/docs
+- Para la pestaña "Waifus", ingresa una categoría. Consulta su documentación para una lista: https://waifu.pics/docs.
 - Para la pestaña "Anime Booru":
-  - `/yandere` para cambiar al modo yande.re (para imágenes generales) [Por defecto]
-  - `/konachan` para cambiar a Konachan (para fondos de pantalla)
-  - Ingresa etiquetas separadas por espacios y obtendrás 20 imágenes (por defecto, configurable)
-  - Incluye un número para ir a esa página
-  - <sub><sub><sub>¿Por qué no usar simplemente la interfaz web, preguntas? los filtros están deshabilitados por defecto en la API</sub></sub></sub>
+  - `/mode yandere` para cambiar al modo yande.re (para imágenes generales) [Por defecto].
+  - `/mode konachan` para cambiar a Konachan (para fondos de pantalla).
+  - Ingresa etiquetas separadas por espacios y obtendrás 20 imágenes (por defecto, configurable).
+  - Incluye un número para ir a esa página.
+  - <sub><sub><sub>¿Por qué no usar simplemente la interfaz web, preguntas? Los filtros están deshabilitados por defecto en la API.</sub></sub></sub>
+
+# Fondo de pantalla y colores
+- Para elegir un fondo de pantalla, pulsa `Ctrl` + `Super` + `T` y selecciona una imagen. Los widgets, aplicaciones GTK (tras reiniciarlas) y aplicaciones Qt (consulta [cómo configurarlo correctamente](https://ii.clsty.link/en/ii-ags/01setup/#not-so-optional-stuff)) tendrán el tema de colores Material Design.
+- Si prefieres colores más vibrantes o apagados, puedes cambiar la paleta de colores Material Design.
+  - Pulsa `Super` + `,` para abrir el panel de la paleta de colores. Haz clic en la flecha pequeña de la esquina inferior derecha para ver las opciones.
+  - Elige la paleta que desees, como Tonal Spot (la normal), Neutra (colores más apagados) o Vibrante...
 
 # Grupos de Espacios de Trabajo
 
@@ -73,13 +87,13 @@ La Agrupación de Espacios de Trabajo introduce un sistema flexible que permite 
 - **Características Clave**
   - **Espacios de Trabajo Escalables**: Supera el límite de 10 espacios de trabajo sin desordenar la barra de espacios de trabajo o el widget de overview. Crea tantos espacios de trabajo como necesites sin comprometer la organización.
   - **Grupos de Espacios de Trabajo**: Los espacios de trabajo se dividen automáticamente en grupos de 10 (por ejemplo, 1-10, 11-20, 21-30). El espacio de trabajo activo determina el grupo visible en la barra (así como el widget de overview).
-  - **Soporte de Atajos de Teclado**: Los atajos de teclado de Hyprland están configurados para adaptarse sin problemas a esta función
-    - Presionar `Super` + `3` te mueve al espacio de trabajo 3 si tu espacio de trabajo actual es 1-10, o al espacio de trabajo 13 si tu espacio de trabajo actual es 11-20
+  - **Soporte de Atajos de Teclado**: Los atajos de teclado de Hyprland están configurados para adaptarse sin problemas a esta función.
+    - Presionar `Super` + `3` te mueve al espacio de trabajo 3 si tu espacio de trabajo actual es 1-10, o al espacio de trabajo 13 si tu espacio de trabajo actual es 11-20.
 
 - **Beneficios**
-  - **Dominio Multitarea**: Cambia sin esfuerzo entre diferentes tareas o proyectos dedicando grupos de espacios de trabajo a contextos específicos
-  - **Entorno Despejado**: Mantén una experiencia de escritorio limpia y organizada, incluso con un alto número de espacios de trabajo
-  - **Poder Multi-Monitor**: Crea grupos de espacios de trabajo específicos para cada monitor para un flujo de trabajo inspirado en [awesome-wm](https://awesomewm.org/)
+  - **Dominio Multitarea**: Cambia sin esfuerzo entre diferentes tareas o proyectos dedicando grupos de espacios de trabajo a contextos específicos.
+  - **Entorno Despejado**: Mantén una experiencia de escritorio limpia y organizada, incluso con un alto número de espacios de trabajo.
+  - **Poder Multi-Monitor**: Crea grupos de espacios de trabajo específicos para cada monitor para un flujo de trabajo inspirado en [awesome-wm](https://awesomewm.org/).
     - Por ejemplo, 1-10 en monitor-1, 11-20 en monitor-2, 21-30 en monitores-3, y así sucesivamente.
 
 ## Navegación y Gestión de Espacios de Trabajo
@@ -103,13 +117,13 @@ La Agrupación de Espacios de Trabajo introduce un sistema flexible que permite 
 Si deseas modificar los atajos de teclado o incluir [más funciones](https://wiki.hyprland.org/Configuring/Dispatchers/) para la navegación de espacios de trabajo, usa el script `${HOME}/.config/ags/scripts/hyprland/workspace_action.sh`, en lugar de `hyprctl dispatch`. Esto determinará el grupo de espacios de trabajo actual usando el ID del espacio de trabajo activo y despachará al espacio de trabajo adecuado.
 :::
 
-## Consideraciones Multi-Monitor
+## Consideraciones para múltiples monitores
 
-Considera estas estrategias para una gestión efectiva de múltiples monitores:
-- Asigna el grupo 1 (espacios de trabajo 1-10) al monitor principal mientras que el grupo 2 (espacios de trabajo 11-20) al monitor secundario.
-  - Al iniciar, mueve manualmente el espacio de trabajo inicial en el monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, luego `Ctrl` + `Super` + `Derecha`.
-  - En efecto, esto también creará un widget de resumen separado por monitor.
-- Usa [vinculación de espacios de trabajo](https://wiki.hyprland.org/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén todos los nombres de tus monitores usando `hyprctl monitors | grep Monitor`.
+Considera estas estrategias para la gestión eficaz de múltiples monitores:
+- Asigna el grupo 1 (espacios de trabajo 1-10) al monitor principal y el grupo 2 (espacios de trabajo 11-20) al monitor secundario:
+  - Al iniciar el sistema, mueve manualmente el espacio de trabajo inicial del monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, y luego `Ctrl` + `Super` + `Derecha`.
+  - Esto también creará un widget de vista general independiente para cada monitor.
+- Usa la [vinculación de espacios de trabajo](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén los nombres de todos tus monitores usando `hyprctl monitors | grep Monitor`.
   ```ini title="~/.config/custom/general.conf"
   # Vincula espacios de trabajo 1-10 (grupo 1) al monitor principal
   workspace = 1, monitor:eDP-1, default:true
@@ -128,7 +142,7 @@ Los grupos de espacios de trabajo no son compatibles de forma nativa en Hyprland
 :::
 
 # Modo de Enfoque
-- Para alternar, presiona `Ctrl` + `Alt` + `/`
-- El ancho de la barra se reducirá a la mitad
-- Solo se mostrará el indicador de espacio de trabajo sin números
-- Se vuelve rojo cuando la batería está baja
+- Para alternar, presiona `Ctrl` + `Alt` + `/`.
+- El ancho de la barra se reducirá a la mitad.
+- Solo se mostrará el indicador de espacio de trabajo sin números.
+- Se vuelve rojo cuando la batería está baja.
