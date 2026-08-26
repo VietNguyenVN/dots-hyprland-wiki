@@ -144,7 +144,7 @@ Considera estas estrategias para la gestión eficaz de múltiples monitores:
   - Al iniciar el sistema, mueve manualmente el espacio de trabajo inicial del monitor secundario al segundo grupo (por ejemplo, espacio de trabajo 11) usando `Super` + `0`, y luego `Ctrl` + `Super` + `Derecha`.
   - Esto también creará un widget de vista general independiente para cada monitor.
 - Usa la [vinculación de espacios de trabajo](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) para colocar siempre espacios de trabajo específicos en monitores específicos. Obtén los nombres de todos tus monitores usando `hyprctl monitors | grep Monitor`.
-  ```ini title="~/.config/custom/general.conf"
+  ```ini title="~/.config/hypr/custom/general.lua"
   -- Vincula los espacios de trabajo 1-10 (grupo 1) al monitor primario
   for i = 1, 10 do
     hl.workspace_rule({ workspace = tostring(i), monitor = "eDP-1", default = true })
