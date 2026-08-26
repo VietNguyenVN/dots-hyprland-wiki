@@ -103,12 +103,12 @@ lastUpdated: 2025-10-10
   - 实际上，这也会为每个显示器创建单独的概览小工具。
 - 使用[工作区绑定](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules)将特定工作区始终放置在特定显示器上。使用 `hyprctl monitors | grep Monitor` 获取所有显示器名称。
   ```ini title="~/.config/custom/general.conf"
-  # 将工作区 1-10（组 1）绑定到主显示器
+  -- 将工作区 1-10（组 1）绑定到主显示器
   workspace = 1, monitor:eDP-1, default:true
   workspace = 2, monitor:eDP-1, default:true
   ...
 
-  # 将工作区 11-20（组 2）绑定到副显示器
+  -- 将工作区 11-20（组 2）绑定到副显示器
   workspace = 11, monitor:HDMI-A-1, default:true
   workspace = 12, monitor:HDMI-A-1, default:true
   ...

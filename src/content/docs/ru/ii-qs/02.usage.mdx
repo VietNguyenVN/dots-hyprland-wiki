@@ -154,12 +154,12 @@ lastUpdated: 2026-04-04
 - Используйте [бинды пространств](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) чтобы всегда располагать определенные пространства на определенном мониторе. Получить все названия мониторов можно через `hyprctl monitors | grep Monitor`.
 
   ```ini title="~/.config/custom/general.conf"
-  # Закрепить пространства 1-10 (группа 1) на основном мониторе
+  -- Закрепить пространства 1-10 (группа 1) на основном мониторе
   workspace = 1, monitor:eDP-1, default:true
   workspace = 2, monitor:eDP-1, default:true
   ...
 
-  # Закрепить пространства 11-20 (группа 2) на втором мониторе
+  -- Закрепить пространства 11-20 (группа 2) на втором мониторе
   workspace = 11, monitor:HDMI-A-1, default:true
   workspace = 12, monitor:HDMI-A-1, default:true
   ...

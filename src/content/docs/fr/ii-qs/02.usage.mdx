@@ -104,12 +104,12 @@ Considérez ces stratégies pour une gestion multi-moniteurs efficace :
   - En effet, cela va aussi créer un widget de vue d'ensemble séparé par moniteur.
 - Utilisez la [liaison d'espaces de travail](https://wiki.hypr.land/Configuring/Workspace-Rules/#rules) pour toujours placer des espaces de travail spécifiques sur des moniteurs spécifiques. Obtenez tous les noms de vos moniteurs en utilisant `hyprctl monitors | grep Monitor`.
   ```ini title="~/.config/custom/general.conf"
-  # Lier les espaces de travail 1-10 (groupe 1) au moniteur principal
+  -- Lier les espaces de travail 1-10 (groupe 1) au moniteur principal
   workspace = 1, monitor:eDP-1, default:true
   workspace = 2, monitor:eDP-1, default:true
   ...
 
-  # Lier les espaces de travail 11-20 (groupe 2) au moniteur secondaire
+  -- Lier les espaces de travail 11-20 (groupe 2) au moniteur secondaire
   workspace = 11, monitor:HDMI-A-1, default:true
   workspace = 12, monitor:HDMI-A-1, default:true
   ...
